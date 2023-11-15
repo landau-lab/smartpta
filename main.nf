@@ -19,6 +19,6 @@ workflow {
         .set { bams_ch }
 
     MarkDuplicatesSpark(bams_ch.map { it }, params.ref)
-    UGDeepVariant(MarkDuplicatesSpark.out.dedup_bam)
+    UGDeepVariant(MarkDuplicatesSpark.out.dedup_bam, params.ref)
     GLNexus(UGDeepVariant.out.gvcfs.collectFile(name: params.gvcf_list, newLine: true), params.sample_id)
 }
