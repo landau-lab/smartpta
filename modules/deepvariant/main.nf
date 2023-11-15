@@ -14,8 +14,8 @@ process UGDeepVariant {
     path(ref)
 
     output:
-    path("${bam_file.baseName}.g.vcf.gz") into gvcfs
-    path("${bam_file.baseName}.g.vcf.gz.tbi") into gvcf_indices
+    path("${bam_file.baseName}.g.vcf.gz"), emit: gvcfs
+    path("${bam_file.baseName}.g.vcf.gz.tbi"), emit: gvcf_indices
 
 
     script:
