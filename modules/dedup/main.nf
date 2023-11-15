@@ -22,13 +22,17 @@ process MarkDuplicatesSpark {
     module load java/1.8
     module load samtools
     
+    if [ ! -d $PWD/tmp ]; then
+        mkdir $PWD/tmp
+    fi
+
     gatk MarkDuplicatesSpark \
         --flowbased \
         --reference ${reference} \
         --input ${bam_file} \
         --output ${bam_file.baseName}.dedup.bam \
         --conf 'spark.executor.cores=${task.cpus}' \
-        --tmp-dir $PWD \
+        --tmp-dir $PWD/tmp \
 
     samtools index ${bam_file.baseName}.dedup.bam
     """
