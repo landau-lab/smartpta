@@ -1,7 +1,10 @@
 process MarkDuplicatesSpark {
-    memory '64 GB'
-    cpus 4
-    queue 'pe2'
+    if ("${workflow.stubRun}" == "false") {
+        memory '64 GB'
+        cpus 4
+        queue 'pe2'
+    }
+
     tag 'dedup'
 
     publishDir "${params.out}/dedup", mode: 'symlink'

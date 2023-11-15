@@ -1,10 +1,13 @@
 params.model = "/gpfs/commons/home/jzinno/ug-deepvariant/Ultima_parabricks_4.0.4-1.ultimadeepvar2_V100_noTF32.eng"
 
 process UGDeepVariant {
-    memory '56 GB'
-    cpus 10
-    queue 'gpu'
-    accelerator 1
+    if ("${workflow.stubRun}" == "false") {
+        memory '56 GB'
+        cpus 10
+        queue 'gpu'
+        accelerator 1
+    }
+
     tag 'ug-deepvariant'
 
     publishDir "${params.out}/ug-deepvariant", mode: 'symlink'

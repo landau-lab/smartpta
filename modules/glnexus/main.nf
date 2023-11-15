@@ -1,7 +1,9 @@
 process GLNexus {
-    memory "512 GB"
-    cpus 32
-    queue "bigmem"
+    if ("${workflow.stubRun}" == "false") {
+        memory "512 GB"
+        cpus 32
+        queue "bigmem"
+    }
     tag "glnexus"
 
     publishDir "${params.out}/glnexus", mode: 'symlink'
