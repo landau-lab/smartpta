@@ -30,4 +30,8 @@ process GLNexus {
         --mem-gbytes ${task.memory.toGiga()} \
         > ${sample_id}.glnexus.bcf
     """
+    stub:
+    """
+    touch ${sample_id}.glnexus.bcf
+    """
 }

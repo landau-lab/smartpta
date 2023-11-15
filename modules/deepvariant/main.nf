@@ -61,6 +61,10 @@ process UGDeepVariant {
 
     bgzip ${bam_file.baseName}.g.vcf
     tabix -p vcf ${bam_file.baseName}.g.vcf.gz
-
+    """
+  stub:
+    """
+    touch ${bam_file.baseName}.g.vcf.gz
+    touch ${bam_file.baseName}.g.vcf.gz.tbi
     """
 }

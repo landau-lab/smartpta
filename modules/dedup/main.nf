@@ -36,4 +36,9 @@ process MarkDuplicatesSpark {
 
     samtools index ${bam_file.baseName}.dedup.bam
     """
+    stub:
+    """
+    touch ${bam_file.baseName}.dedup.bam
+    touch ${bam_file.baseName}.dedup.bam.bai
+    """
 }
