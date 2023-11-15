@@ -25,7 +25,7 @@ process UGDeepVariant {
 
     export SINGULARITY_DOCKER_USERNAME='_token'
     export SINGULARITY_DOCKER_REGISTRY="gcr.io"
-    export SINGULARITY_DOCKER_PASSWORD="$(gcloud auth print-access-token)"
+    export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
 
     singularity run --bind \$(dirname ${params.model}),\$(dirname ${ref}),\$(dirname ${bam_file}) --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
         pbrun deepvariant \
