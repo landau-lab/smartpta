@@ -28,7 +28,7 @@ process MarkDuplicatesSpark {
         --input ${bam_file} \
         --output ${bam_file.baseName}.dedup.bam \
         --conf 'spark.executor.cores=${task.cpus}' \
-        --temp-dir $PWD \
+        --tmp-dir $PWD \
 
     samtools index ${bam_file.baseName}.dedup.bam
     """
