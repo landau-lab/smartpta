@@ -12,6 +12,5 @@
 
 module load nextflow/22.10.4
 
-eval "$(conda shell.bash hook)"
 
 nextflow main.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
