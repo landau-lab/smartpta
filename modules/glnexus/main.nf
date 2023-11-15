@@ -1,7 +1,7 @@
 process GLNexus {
     memory "512 GB"
     cpus 32
-    partition "bigmem"
+    queue "bigmem"
     tag "glnexus"
 
     publishDir "${params.out}/glnexus", mode: 'symlink'

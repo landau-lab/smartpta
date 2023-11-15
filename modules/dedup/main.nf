@@ -1,7 +1,7 @@
 process MarkDuplicatesSpark {
     memory '64 GB'
     cpus 4
-    partition 'pe2'
+    queue 'pe2'
     tag 'dedup'
 
     publishDir "${params.out}/dedup", mode: 'symlink'
