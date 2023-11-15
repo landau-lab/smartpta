@@ -8,7 +8,7 @@ process MarkDuplicatesSpark {
 
     input:
     path(bam_file)
-    path(reference)
+    val(reference)
 
     output:
     path("${bam_file.baseName}.dedup.bam"), emit: dedup_bam
