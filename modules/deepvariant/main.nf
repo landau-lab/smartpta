@@ -11,7 +11,7 @@ process UGDeepVariant {
 
     input:
     path(bam_file)
-    path(ref)
+    val(ref)
 
     output:
     path("${bam_file.baseName}.g.vcf.gz"), emit: gvcfs
