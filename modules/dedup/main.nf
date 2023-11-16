@@ -1,7 +1,7 @@
 process MarkDuplicatesSpark {
     if ("${workflow.stubRun}" == "false") {
         memory '64 GB'
-        cpus 4
+        cpus 8
         queue 'pe2'
     }
 
@@ -25,8 +25,8 @@ process MarkDuplicatesSpark {
     module load java/1.8
     module load samtools
     
-    if [ ! -d $PWD/tmp ]; then
-        mkdir $PWD/tmp
+    if [ ! -d \$PWD/tmp ]; then
+        mkdir \$PWD/tmp
     fi
 
     gatk MarkDuplicatesSpark \
@@ -35,7 +35,7 @@ process MarkDuplicatesSpark {
         --input ${bam_file} \
         --output ${bam_file.baseName}.dedup.bam \
         --conf 'spark.executor.cores=${task.cpus}' \
-        --tmp-dir $PWD/tmp \
+        --tmp-dir \$PWD/tmp \
 
     samtools index ${bam_file.baseName}.dedup.bam
     """
