@@ -1,0 +1,6 @@
+/some/random/example/path/cell1.bam
+/some/random/example/path/cell2.bam
+/some/random/example/path/cell3.bam
+/some/random/example/path/cell4.bam
+/some/random/example/path/cell5.bam
+/some/random/example/path/cell6.bam
