@@ -33,7 +33,7 @@ process UGDeepVariant {
     singularity run --bind \$(dirname ${params.model}),\$(dirname ${ref}),\$(dirname \$(readlink ${bam_file})) --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
         pbrun deepvariant \
         --ref ${ref} \
-        --in-bam \$readlink(${bam_file})  \
+        --in-bam \$(readlink ${bam_file})  \
         --out-variants ${bam_file.baseName}.g.vcf \
         --num-gpus 1 \
         --pb-model-file ${params.model} \
