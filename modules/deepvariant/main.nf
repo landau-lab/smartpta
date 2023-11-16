@@ -25,6 +25,7 @@ process UGDeepVariant {
     """
     module load gcloud
     module load singularity
+    moodule load htslib/1.18
 
     export SINGULARITY_DOCKER_USERNAME='_token'
     export SINGULARITY_DOCKER_REGISTRY="gcr.io"
