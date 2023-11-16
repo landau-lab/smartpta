@@ -31,11 +31,11 @@ process UGDeepVariant {
     export SINGULARITY_DOCKER_REGISTRY="gcr.io"
     export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
 
-    singularity run --bind \$(dirname ${params.model}),\$(dirname ${ref}),\$(dirname \$(readlink -f ${bam_file})),${task.workDir} --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
+    singularity run --bind \$(dirname ${params.model}),\$(dirname ${ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
         pbrun deepvariant \
         --ref ${ref} \
         --in-bam \$(readlink -f ${bam_file})  \
-        --out-variants ${task.workDir}/${bam_file.baseName}.g.vcf \
+        --out-variants \$PWD/${bam_file.baseName}.g.vcf \
         --num-gpus 1 \
         --pb-model-file ${params.model} \
         --channel-hmer-deletion-quality \
