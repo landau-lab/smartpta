@@ -11,7 +11,7 @@ process MarkDuplicatesSpark {
 
     input:
     path(bam_file)
-    val(reference)
+    val(ref)
 
     output:
     path("${bam_file.baseName}.dedup.bam"), emit: dedup_bam
@@ -31,7 +31,7 @@ process MarkDuplicatesSpark {
 
     gatk MarkDuplicatesSpark \
         --flowbased \
-        --reference ${reference} \
+        --reference ${ref} \
         --input ${bam_file} \
         --output ${bam_file.baseName}.dedup.bam \
         --conf 'spark.executor.cores=${task.cpus}' \
