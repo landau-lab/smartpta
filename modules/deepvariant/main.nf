@@ -72,3 +72,57 @@ process UGDeepVariant {
     touch ${bam_file.baseName}.g.vcf.gz.tbi
     """
 }
+
+
+process ILDeepVariant {
+    if ("${workflow.stubRun}" == "false") {
+        memory '56 GB'
+        cpus 10
+        queue 'gpu'
+        accelerator 1
+    }
+
+    tag 'ug-deepvariant'
+
+    publishDir "${params.out}/ug-deepvariant", mode: 'symlink'
+
+    input:
+    path(bam_file)
+    val(ref)
+
+    output:
+    path("${bam_file.baseName}.g.vcf.gz"), emit: gvcfs
+    path("${bam_file.baseName}.g.vcf.gz.tbi"), emit: gvcf_indices
+
+
+    script:
+    """
+    module load gcloud
+    module load singularity
+    module load htslib/1.18
+
+    export SINGULARITY_DOCKER_USERNAME='_token'
+    export SINGULARITY_DOCKER_REGISTRY="gcr.io"
+    export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
+
+    singularity run --bind \$(dirname ${ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.1-1 \
+        pbrun deepvariant \
+        --ref ${ref} \
+        --in-bam \$(readlink -f ${bam_file})  \
+        --out-variants \$PWD/${bam_file.baseName}.g.vcf \
+        --num-gpus 1 \
+        --gpu-num-per-partition 1 \
+        --run-partition \
+        --num-cpu-threads-per-stream 2 \
+        --num-streams-per-gpu 5 \
+        --gvcf
+
+    bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
+    tabix -p vcf ${bam_file.baseName}.g.vcf.gz
+    """
+  stub:
+    """
+    touch ${bam_file.baseName}.g.vcf.gz
+    touch ${bam_file.baseName}.g.vcf.gz.tbi
+    """
+}
