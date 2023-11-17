@@ -1,0 +1,47 @@
+#!/bin/bash
+# Usage: grip <file>... or echo <file>... | grip
+# Description: Pull a symlink target into its source
+#
+# Examples:
+# $ ln -s /path/to/file /path/to/symlink
+# $ ls -l /path/to/symlink
+# lrwxrwxrwx 1 user group 12 2011-11-07 09:56 /path/to/symlink -> /path/to/file
+# $ grip /path/to/symlink
+# $ ls -l /path/to/symlink
+# -rw-r--r-- 1 user group 0 2011-11-07 09:57 /path/to/symlink
+#
+# $ echo /path/to/symlink | grip
+# $ ls -l /path/to/symlink
+# -rw-r--r-- 1 user group 0 2011-11-07 09:57 /path/to/symlink
+#
+# $ grip /path/to/symlink1 /path/to/symlink2
+# $ ls -l /path/to/symlink1 /path/to/symlink2
+# -rw-r--r-- 1 user group 0 2011-11-07 09:57 /path/to/symlink1
+# -rw-r--r-- 1 user group 0 2011-11-07 09:57 /path/to/symlink2
+#
+
+grip_file() {
+    local file=$1
+
+    if [ ! -L $file ]; then
+        echo "$file is not a symlink"
+        return
+    fi
+
+    if [ ! -e $(readlink -f $file) ]; then
+        echo "Target $(readlink -f $file) does not exist"
+        return
+    fi
+
+    mv -f $(readlink -f $file) $file
+}
+
+if [ $# -eq 0 ]; then
+    while IFS= read -r line; do
+        grip_file "$line"
+    done
+else
+    for file in "$@"; do
+        grip_file "$file"
+    done
+fi
