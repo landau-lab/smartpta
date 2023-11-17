@@ -82,9 +82,9 @@ process ILDeepVariant {
         accelerator 1
     }
 
-    tag 'ug-deepvariant'
+    tag 'il-deepvariant'
 
-    publishDir "${params.out}/ug-deepvariant", mode: 'symlink'
+    publishDir "${params.out}/il-deepvariant", mode: 'symlink'
 
     input:
     path(bam_file)
