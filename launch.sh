@@ -9,7 +9,7 @@
 #SBATCH --output=darkshore-log_%j.out
 
 
-
+module load anaconda3
 module load nextflow/22.10.4
 
 conda deactivate
