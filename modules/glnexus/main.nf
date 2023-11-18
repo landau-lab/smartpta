@@ -27,7 +27,6 @@ process GLNexus {
         glnexus_cli \
         --config DeepVariant \
         --list ${gvcf_list} \
-        --bed /gpfs/commons/groups/landau_lab/jzinno/ultima/eso-ug/glnexus/ug_hcr_nohead.bed \
         --threads ${task.cpus} \
         --mem-gbytes ${task.memory.toGiga()} \
         > ${sample_id}.glnexus.bcf
