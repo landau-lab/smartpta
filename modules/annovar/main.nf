@@ -13,8 +13,8 @@ process Annovar {
     path(variant_file)
 
     output:
-    path("${variant_file.baseName}.hg38_multianno.vcf.gz")
-    path("${variant_file.baseName}.hg38_multianno.vcf.gz.tbi")
+    path("${variant_file.simpleName}.hg38_multianno.vcf.gz")
+    path("${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi")
 
     script:
     """
@@ -24,22 +24,22 @@ process Annovar {
         ${variant_file} \
         ${params.annovar_path}/humandb/ \
         -buildver hg38 \
-        -out ${variant_file.baseName} \
+        -out ${variant_file.simpleName} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
         -remove \
         -operation g,f,f,f,f,f \
         -nastring . \
         -vcfinput \
 
-    bgzip -@${task.cpus} ${variant_file.baseName}.hg38_multianno.vcf
-    tabix -p vcf ${variant_file.baseName}.hg38_multianno.vcf.gz
-    rm ${variant_file.baseName}.hg38_multianno.avinput
-    rm ${variant_file.baseName}.hg38_multianno.txt
+    bgzip -@${task.cpus} ${variant_file.simpleName}.hg38_multianno.vcf
+    tabix -p vcf ${variant_file.simpleName}.hg38_multianno.vcf.gz
+    rm ${variant_file.simpleName}.hg38_multianno.avinput
+    rm ${variant_file.simpleName}.hg38_multianno.txt
     """
     stub:
     """
-    touch ${variant_file.baseName}.hg38_multianno.vcf.gz
-    touch ${variant_file.baseName}.hg38_multianno.vcf.gz.tbi
+    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz
+    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi
     """
 
 }
