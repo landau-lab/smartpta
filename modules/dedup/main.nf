@@ -45,3 +45,51 @@ process MarkDuplicatesSpark {
     touch ${bam_file.baseName}.dedup.bam.bai
     """
 }
+
+process FlowMarkDuplicates {
+    if ("${workflow.stubRun}" == "false") {
+        memory '16 GB'
+        cpus 2
+        queue 'pe2'
+    }
+
+    tag 'dedup'
+
+    publishDir "${params.out}/dedup", mode: 'symlink'
+
+    input:
+    path(bam_file)
+
+    output:
+    path("${bam_file.baseName}.dedup.bam"), emit: dedup_bam
+    path("${bam_file.baseName}.dedup.bam.bai"), emit: dedup_bam_index
+    path("${bam_file.baseName}.dedup.metrics.txt"), emit: dedup_metrics
+
+    script:
+    """
+    module purge
+    module load gatk/4.3.0.0
+    module unload java
+    module load java/1.8
+    module load samtools
+    
+    if [ ! -d \$PWD/tmp ]; then
+        mkdir \$PWD/tmp
+    fi
+
+    gatk --java-options "-Xmx12G" MarkDuplicates \
+        --FLOW_MODE true \
+        --INPUT ${bam_file} \
+        --OUTPUT ${bam_file.baseName}.dedup.bam \
+        --TMP_DIR  \$PWD/tmp \
+        --METRICS_FILE ${bam_file.baseName}.dedup.metrics.txt \
+
+    samtools index ${bam_file.baseName}.dedup.bam
+    """
+    stub:
+    """
+    touch ${bam_file.baseName}.dedup.bam
+    touch ${bam_file.baseName}.dedup.bam.bai
+    touch ${bam_file.baseName}.dedup.metrics.txt
+    """
+}
