@@ -23,8 +23,8 @@ process Phyfilt {
     """
     stub:
     """
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi
+    touch ${annotated_vcf.simpleName}.phyfilt.vcf.gz
+    touch ${annotated_vcf.simpleName}.phyfilt.vcf.gz.tbi
     """
 
 }
