@@ -4,6 +4,7 @@ include { FlowMarkDuplicates } from '../modules/dedup'
 include { UGDeepVariant } from '../modules/deepvariant'
 include { GLNexus } from '../modules/glnexus'
 include { SingleCheck } from '../modules/singlecheck'
+include { Annovar } from '../modules/annovar'
 
 workflow {
     Channel
@@ -21,4 +22,5 @@ workflow {
         .set { gvcf_list_ch }
 
     GLNexus(gvcf_list_ch, params.sample_id)
+    Annovar(GLNexus.out.joint_vcf)
 }
