@@ -13,7 +13,8 @@ process GLNexus {
     val sample_id
 
     output:
-    path("${sample_id}.glnexus.bcf")
+    path("${sample_id}.glnexus.vcf.gz"), emit: joint_vcf
+    path("${sample_id}.glnexus.vcf.gz.tbi")
 
     script:
     """
@@ -30,9 +31,17 @@ process GLNexus {
         --threads ${task.cpus} \
         --mem-gbytes ${task.memory.toGiga()} \
         > ${sample_id}.glnexus.bcf
+
+    module load bcftools/1.18
+
+    bcftools view ${sample_id}.glnexus.bcf -Oz > ${sample_id}.glnexus.vcf.gz
+    tabix -p vcf ${sample_id}.glnexus.vcf.gz
+    rm ${sample_id}.glnexus.bcf
+
     """
     stub:
     """
-    touch ${sample_id}.glnexus.bcf
+    touch ${sample_id}.glnexus.vcf.gz
+    touch ${sample_id}.glnexus.vcf.gz.tbi
     """
 }
