@@ -11,6 +11,7 @@ process SingleCheck {
 
     input:
     path(bam_file)
+    path(bam_index)
 
     output:
     path("${bam_file.baseName}.SingleCheck.txt")

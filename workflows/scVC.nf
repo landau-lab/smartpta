@@ -15,7 +15,7 @@ workflow {
 
     FlowMarkDuplicates(bams_ch.map { it })
     UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, params.ref)
-    SingleCheck(FlowMarkDuplicates.out.dedup_bam)
+    SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     UGDeepVariant.out.gvcfs
         .map { gvcf -> gvcf.toString() }
         .collectFile(name: params.gvcf_list, newLine: true)
