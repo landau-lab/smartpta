@@ -13,7 +13,7 @@ process Annovar {
     path(variant_file)
 
     output:
-    path("${variant_file.simpleName}.hg38_multianno.vcf.gz")
+    path("${variant_file.simpleName}.hg38_multianno.vcf.gz"), emit: annovar_vcf
     path("${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi")
 
     script:

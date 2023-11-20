@@ -5,6 +5,7 @@ include { UGDeepVariant } from '../modules/deepvariant'
 include { GLNexus } from '../modules/glnexus'
 include { SingleCheck } from '../modules/singlecheck'
 include { Annovar } from '../modules/annovar'
+include { Phyfilt } from '../modules/phyfilt'
 
 workflow {
     Channel
@@ -23,4 +24,5 @@ workflow {
 
     GLNexus(gvcf_list_ch, params.sample_id)
     Annovar(GLNexus.out.joint_vcf)
+    Phyfilt(Annovar.out.annovar_vcf)
 }
