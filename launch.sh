@@ -14,4 +14,4 @@ module load nextflow/22.10.4
 
 conda deactivate
 
-nextflow main.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
+nextflow workflows/scVC.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
