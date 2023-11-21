@@ -12,6 +12,7 @@
 module load anaconda3
 module load nextflow/22.10.4
 
+eval "$(conda shell.bash hook)"
 conda deactivate
 
 nextflow workflows/scVC.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
