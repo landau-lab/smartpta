@@ -6,9 +6,12 @@
 
 ```bash
    git clone https://github.com/jzinno/darkshore.git
+
    cd darkshore
+
    module load nextflow/22.10.4
-   nextflow main.nf -stub-run -profile stub
+
+   nextflow workflows/scVC.nf -stub-run -profile stub
 
    #explore example output
    tree -C
@@ -36,5 +39,5 @@ Create a bam list
 ```
 
 ```bash
-   nextflow main.nf --bam_list <bam_list> --sample_id <sample_id>
+   nextflow workflows/scVC.nf --bam_list <bam_list> --sample_id <sample_id>
 ```
