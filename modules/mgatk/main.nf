@@ -5,7 +5,7 @@ process MitoCall {
         queue 'pe2'
     }
 
-    conda 'env.yml'
+    conda "${moduleDir}/env.yml"
 
     tag 'mgatk'
 
