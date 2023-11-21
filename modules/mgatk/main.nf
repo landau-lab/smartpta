@@ -20,6 +20,7 @@ process MitoCall {
 
     script:
     """
+    module load R/4.1.3
     mgatk call -i \$PWD \
             --mito-genome 'hg38' \
             --output \$PWD \
