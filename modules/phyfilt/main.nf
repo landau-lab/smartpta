@@ -12,6 +12,7 @@ process Phyfilt {
 
     output:
     path("${annotated_vcf.simpleName}.phyfilt.vcf.gz"), emit: phyfilt_vcf
+    path("${annotated_vcf.simpleName}.phyfilt.vcf.gz.tbi"), emit: phyfilt_index
 
 
     script:
