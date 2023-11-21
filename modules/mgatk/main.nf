@@ -15,7 +15,7 @@ process MitoCall {
     path(mgatk_bams)
 
     output:
-    path("final/${params.sample_id}.rds")
+    path("final/*")
 
 
     script:
@@ -33,6 +33,17 @@ process MitoCall {
     stub:
     """
     mkdir final
+    touch final/${params.sample_id}.A.txt.gz
+    touch final/${params.sample_id}.C.txt.gz
+    touch final/${params.sample_id}.G.txt.gz
+    touch final/${params.sample_id}.T.txt.gz
+    touch final/${params.sample_id}.coverage.txt.gz
+    touch final/${params.sample_id}.depthTable.txt
+    touch final/chrM_refAllele.txt
     touch final/${params.sample_id}.rds
+    touch final/${params.sample_id}.signac.rds
+    touch final/${params.sample_id}.variant_stats.tsv.gz
+    touch final/${params.sample_id}.cell_heteroplasmic_df.tsv.gz
+    touch final/${params.sample_id}.vmr_strand_plot.png
     """
 }
