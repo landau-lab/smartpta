@@ -6,6 +6,7 @@ include { GLNexus } from '../modules/glnexus'
 include { SingleCheck } from '../modules/singlecheck'
 include { Annovar } from '../modules/annovar'
 include { Phyfilt } from '../modules/phyfilt'
+include { MitoCall } from '../modules/mgatk'
 
 workflow {
     Channel
@@ -15,6 +16,7 @@ workflow {
         .set { bams_ch }
 
     FlowMarkDuplicates(bams_ch.map { it })
+    MitoCall(FlowMarkDuplicates.out.dedup_bam.collect())
     UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, params.ref)
     SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     UGDeepVariant.out.gvcfs
