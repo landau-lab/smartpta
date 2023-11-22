@@ -13,6 +13,7 @@ process MitoCall {
 
     input:
     path(mgatk_bams)
+    path(mgatk_bais)
 
     output:
     path("final/*")

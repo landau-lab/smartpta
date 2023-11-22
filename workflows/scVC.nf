@@ -18,7 +18,7 @@ workflow {
 
     FlowMarkDuplicates(bams_ch.map { it })
     if (params.call_mito){
-        MitoCall(FlowMarkDuplicates.out.dedup_bam.collect())
+        MitoCall(FlowMarkDuplicates.out.dedup_bam.collect(), FlowMarkDuplicates.out.dedup_bam_index.collect())
     }
     UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, params.ref)
     SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
@@ -27,7 +27,7 @@ workflow {
         .collectFile(name: params.gvcf_list, newLine: true)
         .set { gvcf_list_ch }
 
-    GLNexus(gvcf_list_ch, params.sample_id)
+    GLNexus(gvcf_list_ch)
     Annovar(GLNexus.out.joint_vcf)
     Phyfilt(Annovar.out.annovar_vcf)
     if (params.run_phylo){
