@@ -14,7 +14,7 @@ process UGDeepVariant {
 
     input:
     path(bam_file)
-    val(ref)
+    path(bam_index)
 
     output:
     path("${bam_file.baseName}.g.vcf.gz"), emit: gvcfs
@@ -31,9 +31,9 @@ process UGDeepVariant {
     export SINGULARITY_DOCKER_REGISTRY="gcr.io"
     export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
 
-    singularity run --bind \$(dirname ${params.model}),\$(dirname ${ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
+    singularity run --bind \$(dirname ${params.model}),\$(dirname ${params.ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://us.gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.0-1.ultimamay \
         pbrun deepvariant \
-        --ref ${ref} \
+        --ref ${params.ref} \
         --in-bam \$(readlink -f ${bam_file})  \
         --out-variants \$PWD/${bam_file.baseName}.g.vcf \
         --num-gpus 1 \
@@ -88,7 +88,7 @@ process ILDeepVariant {
 
     input:
     path(bam_file)
-    val(ref)
+    path(bam_index)
 
     output:
     path("${bam_file.baseName}.g.vcf.gz"), emit: gvcfs
@@ -105,9 +105,9 @@ process ILDeepVariant {
     export SINGULARITY_DOCKER_REGISTRY="gcr.io"
     export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
 
-    singularity run --bind \$(dirname ${ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.1-1 \
+    singularity run --bind \$(dirname ${params.ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.1-1 \
         pbrun deepvariant \
-        --ref ${ref} \
+        --ref ${params.ref} \
         --in-bam \$(readlink -f ${bam_file})  \
         --out-variants \$PWD/${bam_file.baseName}.g.vcf \
         --num-gpus 1 \

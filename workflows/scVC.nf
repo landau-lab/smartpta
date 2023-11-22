@@ -20,7 +20,7 @@ workflow {
     if (params.call_mito){
         MitoCall(FlowMarkDuplicates.out.dedup_bam.collect(), FlowMarkDuplicates.out.dedup_bam_index.collect())
     }
-    UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, params.ref)
+    UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     UGDeepVariant.out.gvcfs
         .map { gvcf -> gvcf.toString() }
