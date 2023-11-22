@@ -36,6 +36,22 @@ grip_file() {
     mv -f $(readlink -f $file) $file
 }
 
+if [ -n "$SLURM_JOB_ACCOUNT" ]; then
+    if [ $(squeue -A $SLURM_JOB_ACCOUNT | grep nextflow | wc -l) -gt 0 ]; then
+        echo -e "\033[33mWarning: There are nextflow jobs running for under $SLURM_JOB_ACCOUNT.\033[0m"
+        echo -e "\033[33mGrip will break these jobs if pulling from their working directory\033[0m"
+        echo -e "\033[33mNextflow jobs are running for the following users:\033[0m\n"
+        squeue -A $SLURM_JOB_ACCOUNT | grep nextflow | awk '{print $4}' | sort | uniq
+        echo -e "\nPlease type 'I am a goofy gripper' to confirm:"
+        read user_input < /dev/tty
+        if [ "$user_input" != "I am a goofy gripper" ]; then
+            echo -e "\n\033[32mGood idea.\033[0m"
+            exit 1
+        fi
+        echo -e "\nI hope you know what you're doing..."
+    fi
+fi
+
 if [ $# -eq 0 ]; then
     while IFS= read -r line; do
         grip_file "$line"
