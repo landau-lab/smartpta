@@ -6,6 +6,8 @@
 
 Pull a symlink target into its source
 
+**NEVER USE THIS WHEN A PIPELINE IS RUNNING**
+
 ### Usage
 
 ```bash
