@@ -59,8 +59,8 @@ process UGDeepVariant {
         --vsc-turn-on-non-hmer-ins-proxy-support \
         --gpu-num-per-partition 1 \
         --run-partition \
-        --num-cpu-threads-per-stream 2 \
-        --num-streams-per-gpu 5 \
+        --num-cpu-threads-per-stream 5 \
+        --num-streams-per-gpu 2 \
         --gvcf
 
     bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
@@ -113,8 +113,8 @@ process ILDeepVariant {
         --num-gpus 1 \
         --gpu-num-per-partition 1 \
         --run-partition \
-        --num-cpu-threads-per-stream 2 \
-        --num-streams-per-gpu 5 \
+        --num-cpu-threads-per-stream 5 \
+        --num-streams-per-gpu 2 \
         --gvcf
 
     bgzip -@${task.cpus} ${bam_file.baseName}.g.vcf
