@@ -18,7 +18,7 @@ process Phyfilt {
     script:
     """
     module load bcftools/1.18
-    bcftools filter -e 'INFO/avsnp150!="." || F_MISSING > 0.5 || QUAL < 30 || TYPE != "snp" || N_ALT > 1 || AC < 2 || AC > 1000 || AF < 0.01 || AF > 0.99 || STRLEN(REF) != 1 || STRLEN(ALT) != 1' ${annotated_vcf} -Oz -o ${annotated_vcf.simpleName}.phyfilt.vcf.gz
+    bcftools filter -e 'INFO/avsnp150!="." || F_MISSING > 0.5 || TYPE != "snp" ||  STRLEN(REF) != 1 || STRLEN(ALT) != 1' ${annotated_vcf} -Oz -o ${annotated_vcf.simpleName}.phyfilt.vcf.gz
     tabix -p vcf ${annotated_vcf.simpleName}.phyfilt.vcf.gz
 
     """
