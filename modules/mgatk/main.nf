@@ -43,8 +43,5 @@ process MitoCall {
     touch final/chrM_refAllele.txt
     touch final/${params.sample_id}.rds
     touch final/${params.sample_id}.signac.rds
-    touch final/${params.sample_id}.variant_stats.tsv.gz
-    touch final/${params.sample_id}.cell_heteroplasmic_df.tsv.gz
-    touch final/${params.sample_id}.vmr_strand_plot.png
     """
 }
