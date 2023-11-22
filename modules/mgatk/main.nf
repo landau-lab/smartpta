@@ -1,6 +1,6 @@
 process MitoCall {
     if ("${workflow.stubRun}" == "false") {
-        memory '5 GB'
+        memory '100 GB'
         cpus 12
         queue 'pe2'
     }
