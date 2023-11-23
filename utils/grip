@@ -38,7 +38,7 @@ grip_file() {
 
 if [ -n "$SLURM_JOB_ACCOUNT" ]; then
     if [ $(squeue -A $SLURM_JOB_ACCOUNT | grep nextflow | wc -l) -gt 0 ]; then
-        echo -e "\033[33mWarning: There are nextflow jobs running for under $SLURM_JOB_ACCOUNT.\033[0m"
+        echo -e "\033[33mWarning: There are nextflow jobs running under $SLURM_JOB_ACCOUNT.\033[0m"
         echo -e "\033[33mGrip will break these jobs if pulling from their working directory\033[0m"
         echo -e "\033[33mNextflow jobs are running for the following users:\033[0m\n"
         squeue -A $SLURM_JOB_ACCOUNT | grep nextflow | awk '{print $4}' | sort | uniq
