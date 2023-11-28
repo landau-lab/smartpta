@@ -1,4 +1,4 @@
-params.res_dir="/gpfs/commons/groups/landau_lab/tprieto/gatk-bundle/hg38/"
+params.res_dir="/gpfs/commons/groups/landau_lab/tprieto/gatk-bundle/hg38"
 params.exac_file="bestpractices/small_exac_common_3.hg38.vcf.gz"
 
 process CalcCont {
