@@ -3,6 +3,7 @@
 include { FlowMarkDuplicates } from '../modules/dedup'
 include { UGDeepVariant } from '../modules/deepvariant'
 include { SingleCheck } from '../modules/singlecheck'
+include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
 include { Annovar } from '../modules/annovar'
 include { Phyfilt } from '../modules/phyfilt'
@@ -22,6 +23,7 @@ workflow {
     }
     UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
+    CalcCont(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     UGDeepVariant.out.gvcfs
         .map { gvcf -> gvcf.toString() }
         .collectFile(name: params.gvcf_list, newLine: true)
