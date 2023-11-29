@@ -150,6 +150,13 @@ process UGDVcpu {
 
     script:
     """
+    module load gcloud
+    module load singularity
+    module load htslib/1.18
+
+    export SINGULARITY_DOCKER_USERNAME='_token'
+    export SINGULARITY_DOCKER_REGISTRY="gcr.io"
+    export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
     export TMPDIR=\$PWD/tmp
 
     if [ ! -d "\$TMPDIR" ]; then
