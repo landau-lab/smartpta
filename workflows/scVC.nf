@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 include { FlowMarkDuplicates } from '../modules/dedup'
-include { UGDeepVariant,UGDVcpu } from '../modules/deepvariant'
+include { UGDeepVariant; UGDVcpu } from '../modules/deepvariant'
 include { SingleCheck } from '../modules/singlecheck'
 include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
