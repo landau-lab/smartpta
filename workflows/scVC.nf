@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 include { FlowMarkDuplicates } from '../modules/dedup'
-include { UGDeepVariant; UGDVcpu } from '../modules/deepvariant'
+include { UGDeepVariantGPU; UGDeepVariantCPU } from '../modules/deepvariant'
 include { SingleCheck } from '../modules/singlecheck'
 include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
@@ -23,15 +23,15 @@ workflow {
     SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     CalcCont(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     if (params.use_gpu){
-        UGDeepVariant(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
-        UGDeepVariant.out.gvcfs
+        UGDeepVariantGPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
+        UGDeepVariantGPU.out.gvcfs
             .map { gvcf -> gvcf.toString() }
             .collectFile(name: params.gvcf_list, newLine: true)
             .set { gvcf_list_ch }
 
     }else{
-        UGDVcpu(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
-        UGDVcpu.out.gvcfs
+        UGDeepVariantCPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
+        UGDeepVariantCPU.out.gvcfs
             .map { gvcf -> gvcf.toString() }
             .collectFile(name: params.gvcf_list, newLine: true)
             .set { gvcf_list_ch }
