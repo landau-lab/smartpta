@@ -33,7 +33,7 @@ process Annovar {
 
     bgzip -@${task.cpus} ${variant_file.simpleName}.hg38_multianno.vcf
     tabix -p vcf ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    rm ${variant_file.simpleName}.hg38_multianno.avinput
+    rm ${variant_file.simpleName}.avinput
     rm ${variant_file.simpleName}.hg38_multianno.txt
     """
     stub:
