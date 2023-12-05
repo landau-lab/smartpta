@@ -77,7 +77,7 @@ process UGDeepVariantGPU {
 
 process UGDeepVariantCPU {
     if ("${workflow.stubRun}" == "false") {
-        memory '56 GB'
+        memory '32 GB'
         cpus 10
     }
 
