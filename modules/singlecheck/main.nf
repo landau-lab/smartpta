@@ -1,6 +1,6 @@
 process SingleCheck {
     if ("${workflow.stubRun}" == "false") {
-        memory '5 GB'
+        memory '6 GB'
         cpus 1
         queue 'pe2'
     }
