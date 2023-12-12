@@ -120,6 +120,9 @@ process UGDeepVariantCPU {
         --output_vcf \$PWD/${bam_file.baseName}.vcf.gz \
         --output_gvcf \$PWD/${bam_file.baseName}.g.vcf.gz \
         --intermediate_results_dir \$PWD/tmp \
+
+    rm -rf \$PWD/tmp
+
     """
   stub:
     """

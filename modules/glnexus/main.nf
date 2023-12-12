@@ -37,6 +37,7 @@ process GLNexus {
     bcftools view ${params.sample_id}.glnexus.bcf -Oz > ${params.sample_id}.glnexus.vcf.gz
     tabix -p vcf ${params.sample_id}.glnexus.vcf.gz
     rm ${params.sample_id}.glnexus.bcf
+    rm -rf GLnexus.DB
 
     """
     stub:
