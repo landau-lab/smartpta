@@ -78,7 +78,8 @@ process UGDeepVariantGPU {
 process UGDeepVariantCPU {
     if ("${workflow.stubRun}" == "false") {
         memory '32 GB'
-        cpus 10
+        cpus 4
+        clusterOptions '-C "v3|v5"'
     }
 
     tag 'ug-deepvariant'
