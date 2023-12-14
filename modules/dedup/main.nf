@@ -23,7 +23,7 @@ process MarkDuplicatesSpark {
     module load gatk/4.3.0.0
     module unload java
     module load java/1.8
-    module load samtools
+    module load samtools/1.18
     
     if [ ! -d \$PWD/tmp ]; then
         mkdir \$PWD/tmp
@@ -71,7 +71,7 @@ process FlowMarkDuplicates {
     module load gatk/4.3.0.0
     module unload java
     module load java/1.8
-    module load samtools
+    module load samtools/1.18
     
     if [ ! -d \$PWD/tmp ]; then
         mkdir \$PWD/tmp
