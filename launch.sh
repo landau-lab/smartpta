@@ -15,4 +15,10 @@ module load nextflow/22.10.4
 eval "$(conda shell.bash hook)"
 conda deactivate
 
+if [ ! -d $PWD/nxf-scratch ]; then
+    mkdir $PWD/nxf-scratch
+fi
+
+export NXF_TEMP=$PWD/nxf-scratch
+
 nextflow workflows/scVC.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
