@@ -26,8 +26,12 @@ Right now only runs on NYGC cluster
 This will run the following steps:
 
 - MarkDuplicates
+- SingleCheck
+- Contamination Estimate
 - UG DeepVariant
 - GLNexus joint genotyping
+- Variant Annotation
+- VCF Filtering
 
 Create a bam list
 
