@@ -48,7 +48,6 @@ if [ -n "$SLURM_JOB_ACCOUNT" ]; then
             echo -e "\n\033[32mGood idea.\033[0m"
             exit 1
         fi
-        echo -e "\nI hope you know what you're doing..."
     fi
 fi
 
