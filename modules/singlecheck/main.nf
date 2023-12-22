@@ -3,7 +3,6 @@ process SingleCheck {
         memory '6 GB'
         cpus 1
         queue 'pe2'
-        cache 'lenient'
     }
 
     tag 'dispersion'
