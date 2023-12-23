@@ -1,0 +1,127 @@
+#!/bin/bash
+
+module load bcftools/1.18
+
+# Script to analyze VCF files and calculate statistics based on QUAL scores.
+
+# Usage information
+usage() {
+    echo -e "\nUsage: $(basename $0) [VCF file] [Bin size] [Max N_MUT] [Operator: gt/lt/eq]"
+    echo -e "\nThis script analyzes a VCF file and calculates statistical data for QUAL scores in specified bins."
+    echo -e "\nArguments:"
+    echo -e "  VCF file\tPath to the VCF file (must end in .vcf.gz)"
+    echo -e "  Bin size\tSize of the bins for QUAL scores (positive integer)"
+    echo -e "  Max N_MUT\tMaximum number of mutations (N_MUT) to consider (positive integer)"
+    echo -e "  Operator\tComparison operator for filtering N_MUT (one of: gt, lt, eq)"
+    echo -e "\nExample:"
+    echo -e "  $(basename $0) sample.vcf.gz 10 4 gt"
+    echo -e "\nIn this example, the script processes 'sample.vcf.gz',"
+    echo -e "groups QUAL scores into bins of size 10, and calculates statistics"
+    echo -e "for bins where the number of mutations (N_MUT) is greater than 4.\n"
+    exit 1
+}
+
+# Validate input arguments
+validate_input() {
+    if [ ! -f "$1" ]; then
+        echo "Error: VCF file not found or unreadable."
+        exit 1
+    fi
+
+    if ! [[ $2 =~ ^[0-9]+$ ]]; then
+        echo "Error: Bin size must be a positive integer."
+        exit 1
+    fi
+
+    if ! [[ $3 =~ ^[0-9]+$ ]]; then
+        echo "Error: Max N_MUT must be a positive integer."
+        exit 1
+    fi
+
+    case $4 in
+        gt|lt|eq) ;;
+        *) echo "Error: Invalid comparison operator. Use gt, lt, or eq."; exit 1;;
+    esac
+}
+
+# Extract QUAL, N_MUT, and N_MISS from VCF
+extract_data() {
+    local vcf_file=$1
+    local temp_file=$2
+
+    echo "Extracting data from VCF file..."
+    bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%QUAL[\t%GT]\n' "$vcf_file" | \
+    awk -v OFS='\t' '{
+        n_mut=0; n_miss=0;
+        for (i=6; i<=NF; i++) {
+            if ($i ~ /\.\/\./) n_miss++;
+            else if ($i !~ /0\/0/ && $i !~ /0|0/) n_mut++;
+        }
+        if (n_mut > 0) {
+            print $1, $2, $3, $4, $5, n_mut, n_miss;
+        }
+    }' > "$temp_file"
+}
+
+# Calculate statistics and sort
+calculate_stats() {
+    local temp_file=$1
+    local bin_size=$2
+    local max_n_mut=$3
+    local comp_op=$4
+
+    echo "Calculating statistics..."
+    awk -v bin_size="$bin_size" -v max_n_mut="$max_n_mut" -v comp_op="$comp_op" '
+    {
+        bin = int($5 / bin_size) * bin_size;
+        n_mut = $6;
+        n_miss = $7;
+
+        if ((comp_op == "gt" && n_mut > max_n_mut) || (comp_op == "lt" && n_mut < max_n_mut) || (comp_op == "eq" && n_mut == max_n_mut)) {
+            count[bin]++;
+            sum_mut[bin] += n_mut;
+            sum_miss[bin] += n_miss;
+            sum_sq_mut[bin] += n_mut * n_mut;
+            sum_sq_miss[bin] += n_miss * n_miss;
+            total_vars[bin]++;
+        }
+    }
+    END {
+        print "QUAL_BIN", "TOTAL_VARS", "MEAN_N_MUT", "STDDEV_N_MUT", "MEAN_N_MISS", "STDDEV_N_MISS";
+        for (b in count) {
+            mean_mut = sum_mut[b] / count[b];
+            mean_miss = sum_miss[b] / count[b];
+            stddev_mut = sqrt((sum_sq_mut[b] - (sum_mut[b] * sum_mut[b] / count[b])) / count[b]);
+            stddev_miss = sqrt((sum_sq_miss[b] - (sum_miss[b] * sum_miss[b] / count[b])) / count[b]);
+            print b, total_vars[b], mean_mut, stddev_mut, mean_miss, stddev_miss;
+        }
+    }' "$temp_file" | column -t | sort -r
+}
+
+# Main function
+main() {
+    if [ "$#" -ne 4 ]; then
+        usage
+    fi
+
+    local vcf_file=$1
+    local bin_size=$2
+    local max_n_mut=$3
+    local operator=$4
+
+    validate_input "$vcf_file" "$bin_size" "$max_n_mut" "$operator"
+
+    local basename=$(basename "$vcf_file" .vcf.gz)
+    local temp_file="${basename}.qual_nmut_nmiss.txt"
+
+    if [ ! -f "$temp_file" ]; then
+        extract_data "$vcf_file" "$temp_file"
+    else
+        echo "Using existing temp file: $temp_file"
+    fi
+
+    calculate_stats "$temp_file" "$bin_size" "$max_n_mut" "$operator"
+}
+
+# Execute the main function with all arguments
+main "$@"
