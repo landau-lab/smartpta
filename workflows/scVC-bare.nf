@@ -35,3 +35,4 @@ workflow {
             .collectFile(name: params.gvcf_list, newLine: true)
             .set { gvcf_list_ch }
     }
+}
