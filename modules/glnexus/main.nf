@@ -26,7 +26,7 @@ process GLNexus {
 
     singularity run --bind \$(dirname \$(readlink -f ${gvcf_list})),\$PWD,\$gvcf_dirs /nfs/sw/glnexus/glnexus-1.4.1/glnexus_cli.sif \
         glnexus_cli \
-        --config DeepVariant \
+        --config ${moduleDir}/darkshore.glnexus.yml \
         --list ${gvcf_list} \
         --threads ${task.cpus} \
         --mem-gbytes ${task.memory.toGiga()} \
