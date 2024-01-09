@@ -2,8 +2,8 @@
 # Modified from the default config to include changes from Ultima Genomics.
 # Additionally includes SB field for strand bias.
 unifier_config:
-  min_AQ1: 10
-  min_AQ2: 10
+  min_AQ1: 0
+  min_AQ2: 0
   min_GQ: 0
   monoallelic_sites_for_lost_alleles: true
   max_alleles_per_site: 32
