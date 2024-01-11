@@ -25,13 +25,15 @@ process Star {
     module load star/2.4.2a
     module load samtools/1.18
 
+    prefix=$(cut -d "_" -f 1-2 <<< "${trimmed[0].simpleName}")
+
     STAR \
     --runThreadN ${task.cpus} \
     --genomeDir ${params.star_ref} \
     --sjdbGTFfile ${params.star_gtf} \
     --twopassMode Basic \
     --outSAMtype BAM SortedByCoordinate \
-    --outFileNamePrefix ${trimmed[0].simpleName}. \
+    --outFileNamePrefix \${prefix}. \
     --readFilesCommand zcat \
     --readFilesIn ${trimmed[0]} ${trimmed[1]} \
 
