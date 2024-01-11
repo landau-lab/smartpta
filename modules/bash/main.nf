@@ -16,7 +16,7 @@ process MergeCounts {
 
     script:
     """
-    ./${moduleDir}/merge_htseq.sh ${count_list} ${params.sample_id}.counts.tab
+    ${moduleDir}/merge_htseq.sh ${count_list} ${params.sample_id}.counts.tab
     """
     stub:
     """
