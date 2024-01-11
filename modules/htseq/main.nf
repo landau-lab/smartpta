@@ -12,7 +12,7 @@ process HTSeq {
     path(bam)
 
     output:
-    path("${bam.simpleName}.counts")
+    path("${bam.simpleName}.counts"), emit: htseq_counts
 
     script:
     """
