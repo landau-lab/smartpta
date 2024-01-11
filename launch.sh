@@ -7,7 +7,6 @@
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=jzinno@nygenome.org
 #SBATCH --output=darkshore-log_%j.out
-#SBATCH --time=20-00:00:00
 
 
 module load anaconda3
