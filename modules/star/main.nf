@@ -1,5 +1,4 @@
 params.star_ref = "/gpfs/commons/groups/landau_lab/rraviram/hg38/refdata-gex-GRCh38-2020-A/star/"
-params.star_gtf = "/gpfs/commons/groups/landau_lab/rraviram/hg38/refdata-gex-GRCh38-2020-A/genes/genes.gtf"
 
 process Star {
     if ("${workflow.stubRun}" == "false") {
@@ -30,7 +29,7 @@ process Star {
     STAR \
     --runThreadN ${task.cpus} \
     --genomeDir ${params.star_ref} \
-    --sjdbGTFfile ${params.star_gtf} \
+    --sjdbGTFfile ${params.gtf} \
     --twopassMode Basic \
     --outSAMtype BAM SortedByCoordinate \
     --outFileNamePrefix \${prefix}. \
