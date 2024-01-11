@@ -1,0 +1,6 @@
+/some/random/example/path/cell1_R1.fastq.gz /some/random/example/path/cell1_R2.fastq.gz
+/some/random/example/path/cell2_R1.fastq.gz /some/random/example/path/cell2_R2.fastq.gz
+/some/random/example/path/cell3_R1.fastq.gz /some/random/example/path/cell3_R2.fastq.gz
+/some/random/example/path/cell4_R1.fastq.gz /some/random/example/path/cell4_R2.fastq.gz
+/some/random/example/path/cell5_R1.fastq.gz /some/random/example/path/cell5_R2.fastq.gz
+/some/random/example/path/cell6_R1.fastq.gz /some/random/example/path/cell6_R2.fastq.gz
