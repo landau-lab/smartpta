@@ -12,6 +12,6 @@ workflow {
         }
         .set { fastq_ch }
     FastP( fastq_ch  )
-    Star( FastP.trimmed )
+    Star( FastP.out.trimmed )
 
 }

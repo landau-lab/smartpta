@@ -16,8 +16,8 @@ process Star {
 
 
     output:
-    path("${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam") into star_bam
-    path("${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam.bai") into star_bai
+    path("${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam"), emit: star_bam
+    path("${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam.bai"), emit: star_bai
 
 
     script:
