@@ -5,9 +5,9 @@ include { FastP } from '../modules/fastp'
 workflow {
     Channel
         .fromPath( params.rna_fastq_table )
-        .splitCsv()
+        .splitCsv(sep:'\s+', header:false)
         .map { row ->
-            tuple( row.fastq_1, row.fastq_2 )
+            tuple( row[0], row[1] )
         }
         .set { fastq_ch }
     FastP( fastq_ch  )
