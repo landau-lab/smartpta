@@ -1,3 +1,5 @@
+params.adapters = "${moduleDir}/adapters.fasta"
+
 process FastP {
     if ("${workflow.stubRun}" == "false") {
         memory "8 GB"
