@@ -25,7 +25,7 @@ process Star {
     module load star/2.4.2a
     module load samtools/1.18
 
-    prefix=$(cut -d "_" -f 1-2 <<< "${trimmed[0].simpleName}")
+    prefix=\$(echo "${trimmed[0].simpleName}" | rev | cut -d'_' -f2- | rev)
 
     STAR \
     --runThreadN ${task.cpus} \
