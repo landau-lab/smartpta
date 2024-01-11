@@ -37,12 +37,13 @@ process Star {
     --readFilesCommand zcat \
     --readFilesIn ${trimmed[0]} ${trimmed[1]} \
 
-    samtools index -@ ${task.cpus} ${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam
+    samtools index -@ ${task.cpus} \${prefix}.Aligned.sortedByCoord.out.bam
 
     """
     stub:
     """
-    touch ${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam
-    touch ${trimmed[0].simpleName}.Aligned.sortedByCoord.out.bam.bai
+    prefix=\$(echo "${trimmed[0].simpleName}" | rev | cut -d'_' -f2- | rev)
+    touch \${prefix}.Aligned.sortedByCoord.out.bam
+    touch \${prefix}.Aligned.sortedByCoord.out.bam.bai
     """
 }
