@@ -2,6 +2,7 @@
 
 include { FastP } from '../modules/fastp'
 include { Star } from '../modules/star'
+include { HTSeq } from '../modules/htseq'
 
 workflow {
     Channel
@@ -13,5 +14,6 @@ workflow {
         .set { fastq_ch }
     FastP( fastq_ch  )
     Star( FastP.out.trimmed )
+    HTSeq( Star.out.star_bam )
 
 }
