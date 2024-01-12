@@ -16,13 +16,15 @@ process FastP {
 
     output:
     tuple path("${fastqs[0].simpleName}.fastp.fastq.gz"), path("${fastqs[1].simpleName}.fastp.fastq.gz"), emit: trimmed
-    path("${fastqs[0].simpleName}.fastp.json")
-    path("${fastqs[0].simpleName}.fastp.html")
+    path("*.fastp.json"), emit: fastp_json
+    path("*.fastp.html")
 
 
     script:
     """
     module load fastp/0.23.1
+
+    prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
 
     fastp \
         -i ${fastqs[0]} \
@@ -32,17 +34,17 @@ process FastP {
         --overrepresentation_analysis \
         --adapter_fasta ${params.adapters} \
         --average_qual 20 \
-        --json ${fastqs[0].simpleName}.fastp.json \
-        --html ${fastqs[0].simpleName}.fastp.html \
+        --json \$prefix.fastp.json \
+        --html \$prefix.fastp.html \
         --thread ${task.cpus} \
-
 
     """
     stub:
     """
+    prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
     touch ${fastqs[0].simpleName}.fastp.fastq.gz
     touch ${fastqs[1].simpleName}.fastp.fastq.gz
-    touch ${fastqs[0].simpleName}.fastp.json
-    touch ${fastqs[0].simpleName}.fastp.html
+    touch \${prefix}.fastp.json
+    touch \${prefix}.fastp.html
     """
 }
