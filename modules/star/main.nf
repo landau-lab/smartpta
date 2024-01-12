@@ -17,6 +17,8 @@ process Star {
     output:
     path("*.Aligned.sortedByCoord.out.bam"), emit: star_bam
     path("*.Aligned.sortedByCoord.out.bam.bai"), emit: star_bai
+    path("*.Log.final.out"), emit: star_log
+    path("*.SJ.out.tab"), emit: star_sj
 
 
     script:
@@ -44,5 +46,7 @@ process Star {
     prefix=\$(echo "${trimmed[0].simpleName}" | rev | cut -d'_' -f2- | rev)
     touch \${prefix}.Aligned.sortedByCoord.out.bam
     touch \${prefix}.Aligned.sortedByCoord.out.bam.bai
+    touch \${prefix}.Log.final.out
+    touch \${prefix}.SJ.out.tab
     """
 }
