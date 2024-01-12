@@ -4,6 +4,7 @@ include { FastP } from '../modules/fastp'
 include { Star } from '../modules/star'
 include { HTSeq } from '../modules/htseq'
 include { MergeCounts } from '../modules/bash'
+include { RNAMultiQC } from '../modules/multiqc'
 
 workflow {
     Channel
@@ -21,5 +22,13 @@ workflow {
         .collectFile( name: 'htseq_counts.txt', newLine: true )
         .set { htseq_counts_ch }
     MergeCounts( htseq_counts_ch )
-
+    FastP.out.fastp_json
+        .map { fastp_data -> fastp_data.toString() }
+        .collectFile( name: 'fastp_data.txt', newLine: true )
+        .set { fastp_data_ch }
+    Star.out.star_log
+        .map { star_log -> star_log.toString() }
+        .collectFile( name: 'star_log.txt', newLine: true )
+        .set { star_log_ch }
+    RNAMultiQC( fastp_data_ch, star_log_ch, )
 }
