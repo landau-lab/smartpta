@@ -26,14 +26,14 @@ workflow {
         UGDeepVariantGPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
         UGDeepVariantGPU.out.gvcfs
             .map { gvcf -> gvcf.toString() }
-            .collectFile(name: params.gvcf_list, newLine: true)
+            .collectFile(name: 'gvcfs.txt', newLine: true)
             .set { gvcf_list_ch }
 
     }else{
         UGDeepVariantCPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
         UGDeepVariantCPU.out.gvcfs
             .map { gvcf -> gvcf.toString() }
-            .collectFile(name: params.gvcf_list, newLine: true)
+            .collectFile(name: 'gvcfs.txt', newLine: true)
             .set { gvcf_list_ch }
     }
     GLNexus(gvcf_list_ch)
