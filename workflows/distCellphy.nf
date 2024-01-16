@@ -1,4 +1,4 @@
-include { CellPhySingleML;CellPhyBootstraps } from '../modules/phylo'
+include { CellPhySingleML;CellPhyBootstraps;CellPhySupport } from '../modules/phylo'
 
 workflow {
     Channel
@@ -26,5 +26,10 @@ workflow {
 
     // Use the new channel as the input for CellPhyBootstraps
     CellPhyBootstraps( inputs_for_bootstrap )
+    CellPhyBootstraps
+        .out
+        .collectFile( name: 'allBootstraps.txt', newLine: true )
+        .set { all_bootstraps }
+    CellPhySupport( best_tree, all_bootstraps)
 
 }
