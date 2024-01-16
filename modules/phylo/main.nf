@@ -43,7 +43,7 @@ process CellPhy {
 
 }
 
-process CellPhySingleML {
+process MLSearchCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '4 GB'
         cpus 4
@@ -86,7 +86,7 @@ process CellPhySingleML {
 
 }
 
-process CellPhyBootstraps {
+process BootstrapsCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '4 GB'
         cpus 4
@@ -108,6 +108,7 @@ process CellPhyBootstraps {
     module load cellphy/0.9.2
     raxml-ng-cellphy-linux \
         --bootstrap \
+        --seed \$RANDOM \
         --msa ${phylo_vcf} \
         --model GTGTR4+G+FO \
         --msa-format VCF \
@@ -125,7 +126,7 @@ process CellPhyBootstraps {
 
 }
 
-process CellPhySupport {
+process SupportCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '8 GB'
         cpus 4

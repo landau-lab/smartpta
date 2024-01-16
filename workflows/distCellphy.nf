@@ -1,4 +1,4 @@
-include { CellPhySingleML;CellPhyBootstraps;CellPhySupport } from '../modules/phylo'
+include { MLSearchCellPhy;BootstrapsCellPhy;SupportCellPhy } from '../modules/phylo'
 
 workflow {
     Channel
@@ -10,8 +10,8 @@ workflow {
     Channel
         .of( 1..params.n_bootstrap_search )
         .set { bootstrap_idx }
-    CellPhySingleML( joint_vcf, tree_search_idx )
-    CellPhySingleML
+    MLSearchCellPhy( joint_vcf, tree_search_idx )
+    MLSearchCellPhy
         .out
         .map { tree, tree_ll -> [ tree, tree_ll.text.toFloat() ]}
         .toSortedList { a, b -> b[1] <=> a[1] }
@@ -24,12 +24,12 @@ workflow {
         .combine(bootstrap_idx)
         .set { inputs_for_bootstrap }
 
-    // Use the new channel as the input for CellPhyBootstraps
-    CellPhyBootstraps( inputs_for_bootstrap )
-    CellPhyBootstraps
+    // Use the new channel as the input for BootstrapsCellPhy
+    BootstrapsCellPhy( inputs_for_bootstrap )
+    BootstrapsCellPhy
         .out
         .collectFile( name: 'allBootstraps.txt', newLine: true )
         .set { all_bootstraps }
-    CellPhySupport( best_tree, all_bootstraps)
+    SupportCellPhy( best_tree, all_bootstraps)
 
 }
