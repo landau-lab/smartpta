@@ -58,7 +58,7 @@ process CellPhySingleML {
     each tree_search_idx
 
     output:
-    tuple path("${phylo_vcf.simpleName}.CellPhy.raxml.bestTree.${tree_search_idx}"), path("loglikelihood.${tree_search_idx}.txt")
+    tuple path("${phylo_vcf.simpleName}.CellPhy.${tree_search_idx}.raxml.bestTree"), path("loglikelihood.${tree_search_idx}.txt")
 
 
     script:
@@ -70,18 +70,16 @@ process CellPhySingleML {
         --model GTGTR4+G+FO \
         --msa-format VCF \
         --threads ${task.cpus} \
-        --prefix ${phylo_vcf.simpleName}.CellPhy \
+        --prefix ${phylo_vcf.simpleName}.CellPhy.${tree_search_idx} \
         --tree rand{1} \
 
-    loglikelihood=\$(grep "Final LogLikelihood" ${phylo_vcf.simpleName}.CellPhy.raxml.log | awk '{print $3}')
+    loglikelihood=\$(grep "Final LogLikelihood" ${phylo_vcf.simpleName}.CellPhy.raxml.log | awk '{print \$3}')
     echo \$loglikelihood > loglikelihood.${tree_search_idx}.txt
-
-    mv ${phylo_vcf.simpleName}.CellPhy.raxml.bestTree ${phylo_vcf.simpleName}.CellPhy.raxml.bestTree.${tree_search_idx}
 
     """
     stub:
     """
-    touch ${phylo_vcf.simpleName}.CellPhy.raxml.bestTree.${tree_search_idx}
+    touch ${phylo_vcf.simpleName}.CellPhy.${tree_search_idx}.raxml.bestTree
     awk -v seed=\$RANDOM 'BEGIN{srand(seed);print -rand()}' > loglikelihood.${tree_search_idx}.txt
     """
 
