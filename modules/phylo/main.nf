@@ -45,9 +45,9 @@ process CellPhy {
 
 process CellPhySingleML {
     if ("${workflow.stubRun}" == "false") {
-        memory '512 GB'
-        cpus 36
-        queue 'bigmem'
+        memory '4 GB'
+        cpus 4
+        queue 'pe2'
     }
     tag "tree-search"
 
@@ -88,9 +88,9 @@ process CellPhySingleML {
 
 process CellPhyBootstraps {
     if ("${workflow.stubRun}" == "false") {
-        memory '512 GB'
-        cpus 36
-        queue 'bigmem'
+        memory '4 GB'
+        cpus 4
+        queue 'pe2'
     }
     tag "tree-validation"
 
@@ -100,7 +100,7 @@ process CellPhyBootstraps {
     tuple path(phylo_vcf), path(best_tree), val(bootstrap_search_idx)
 
     output:
-    path("${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.support")
+    path("${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.bootstraps")
 
 
     script:
@@ -116,18 +116,49 @@ process CellPhyBootstraps {
         --bs-trees ${params.bs_trees_per_job} \
         --bs-metric tbe,fbp \
 
+
+    """
+    stub:
+    """
+    touch ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.bootstraps
+    """
+
+}
+
+process CellPhySupport {
+    if ("${workflow.stubRun}" == "false") {
+        memory '8 GB'
+        cpus 4
+        queue 'pe2'
+    }
+    tag "tree-support"
+
+    publishDir "${params.out}/cellphy/support", mode: 'symlink'
+
+    input:
+    path(best_tree)
+    path(all_bootstraps)
+
+    output:
+    path("${best_tree.simpleName}.CellPhy.raxml.support")
+
+
+    script:
+    """
+    module load cellphy/0.9.2
+
     raxml-ng-cellphy-linux \
         --support \
         --threads ${task.cpus} \
         --tree ${best_tree} \
-        --prefix ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx} \
-        --bs-trees ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.bootstraps \
+        --prefix ${best_tree.simpleName}.CellPhy \
+        --bs-trees ${all_bootstraps} \
 
 
     """
     stub:
     """
-    touch ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.support
+    touch ${best_tree.simpleName}.CellPhy.raxml.support
     """
 
 }
