@@ -1,4 +1,4 @@
-include { CellPhySingleML } from '../modules/phylo'
+include { CellPhySingleML,CellPhyBootstraps } from '../modules/phylo'
 
 workflow {
     Channel
@@ -7,6 +7,9 @@ workflow {
     Channel
         .of( 1..params.n_tree_search )
         .set { tree_search_idx }
+    Channel
+        .of( 1..params.n_bootstrap )
+        .set { bootstrap_idx }
     CellPhySingleML( joint_vcf, tree_search_idx )
     CellPhySingleML
         .out
@@ -15,4 +18,6 @@ workflow {
         .set { best_tree }
 
     best_tree.view { "The best tree is: ${it[0]}" }
+    CellPhyBootstraps( joint_vcf, best_tree[0], bootstrap_idx )
+
 }

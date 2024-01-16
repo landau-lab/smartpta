@@ -49,7 +49,7 @@ process CellPhySingleML {
         cpus 36
         queue 'bigmem'
     }
-    tag "phylo"
+    tag "tree-search"
 
     publishDir "${params.out}/cellphy/mltrees", mode: 'symlink'
 
@@ -81,6 +81,53 @@ process CellPhySingleML {
     """
     touch ${phylo_vcf.simpleName}.CellPhy.${tree_search_idx}.raxml.bestTree
     awk -v seed=\$RANDOM 'BEGIN{srand(seed);print -rand()}' > loglikelihood.${tree_search_idx}.txt
+    """
+
+}
+
+process CellPhyBootstraps {
+    if ("${workflow.stubRun}" == "false") {
+        memory '512 GB'
+        cpus 36
+        queue 'bigmem'
+    }
+    tag "tree-validation"
+
+    publishDir "${params.out}/cellphy/bootstraps", mode: 'symlink'
+
+    input:
+    path(phylo_vcf)
+    path(best_tree)
+    each bootstrap_search_idx
+
+    output:
+    path("${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.support")
+
+
+    script:
+    """
+    module load cellphy/0.9.2
+    raxml-ng-cellphy-linux \
+        --bootstrap \
+        --msa ${phylo_vcf} \
+        --model GTGTR4+G+FO \
+        --msa-format VCF \
+        --threads ${task.cpus} \
+        --prefix ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx} \
+        --bs-trees ${params.bs_trees_per_job} \
+        --bs-metric tbe,fbp \
+
+    raxml-ng-cellphy-linux \
+        --support \
+        --threads ${task.cpus} \
+        --tree ${best_tree} \
+        --bs-trees ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.bootstraps \
+
+
+    """
+    stub:
+    """
+    touch ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.support
     """
 
 }
