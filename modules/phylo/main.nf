@@ -66,6 +66,7 @@ process CellPhySingleML {
     module load cellphy/0.9.2
     raxml-ng-cellphy-linux \
         --search \
+        --seed \$RANDOM \
         --msa ${phylo_vcf} \
         --model GTGTR4+G+FO \
         --msa-format VCF \
@@ -73,7 +74,7 @@ process CellPhySingleML {
         --prefix ${phylo_vcf.simpleName}.CellPhy.${tree_search_idx} \
         --tree rand{1} \
 
-    loglikelihood=\$(grep "Final LogLikelihood" ${phylo_vcf.simpleName}.CellPhy.raxml.log | awk '{print \$3}')
+    loglikelihood=\$(grep "Final LogLikelihood" ${phylo_vcf.simpleName}.CellPhy.${tree_search_idx}.raxml.log | awk '{print \$3}')
     echo \$loglikelihood > loglikelihood.${tree_search_idx}.txt
 
     """
@@ -119,6 +120,7 @@ process CellPhyBootstraps {
         --support \
         --threads ${task.cpus} \
         --tree ${best_tree} \
+        --prefix ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx} \
         --bs-trees ${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.bootstraps \
 
 
