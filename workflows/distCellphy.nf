@@ -1,4 +1,4 @@
-include { CellPhySingleML,CellPhyBootstraps } from '../modules/phylo'
+include { CellPhySingleML;CellPhyBootstraps } from '../modules/phylo'
 
 workflow {
     Channel
@@ -8,7 +8,7 @@ workflow {
         .of( 1..params.n_tree_search )
         .set { tree_search_idx }
     Channel
-        .of( 1..params.n_bootstrap )
+        .of( 1..params.n_bootstrap_search )
         .set { bootstrap_idx }
     CellPhySingleML( joint_vcf, tree_search_idx )
     CellPhySingleML
