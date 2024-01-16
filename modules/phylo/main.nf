@@ -96,9 +96,7 @@ process CellPhyBootstraps {
     publishDir "${params.out}/cellphy/bootstraps", mode: 'symlink'
 
     input:
-    path(phylo_vcf)
-    path(best_tree)
-    each bootstrap_search_idx
+    tuple path(phylo_vcf), path(best_tree), val(bootstrap_search_idx)
 
     output:
     path("${phylo_vcf.simpleName}.CellPhy.${bootstrap_search_idx}.raxml.support")

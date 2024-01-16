@@ -15,9 +15,16 @@ workflow {
         .out
         .map { tree, tree_ll -> [ tree, tree_ll.text.toFloat() ]}
         .toSortedList { a, b -> b[1] <=> a[1] }
+        .map { it[0][0] }
         .set { best_tree }
 
-    best_tree.view { "The best tree is: ${it[0]}" }
-    CellPhyBootstraps( joint_vcf, best_tree[0], bootstrap_idx )
+    best_tree.view { "The best tree is: ${it}" }
+    joint_vcf
+        .combine(best_tree)
+        .combine(bootstrap_idx)
+        .set { inputs_for_bootstrap }
+
+    // Use the new channel as the input for CellPhyBootstraps
+    CellPhyBootstraps( inputs_for_bootstrap )
 
 }
