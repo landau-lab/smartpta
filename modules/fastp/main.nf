@@ -6,7 +6,7 @@ process FastP {
         cpus 4
         queue "pe2"
     }
-    tag "fastp"
+    tag "trimming"
 
     publishDir "${params.out}/fastp", mode: 'symlink'
 
@@ -18,6 +18,7 @@ process FastP {
     tuple path("${fastqs[0].simpleName}.fastp.fastq.gz"), path("${fastqs[1].simpleName}.fastp.fastq.gz"), emit: trimmed
     path("*.fastp.json"), emit: fastp_json
     path("*.fastp.html")
+    path("*.fastp.failed.fastq.gz"), emit: failed
 
 
     script:
@@ -36,6 +37,7 @@ process FastP {
         --average_qual 20 \
         --json \$prefix.fastp.json \
         --html \$prefix.fastp.html \
+        --failed_out \$prefix.fastp.failed.fastq.gz
         --thread ${task.cpus} \
 
     """
