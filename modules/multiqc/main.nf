@@ -20,7 +20,7 @@ process RNAMultiQC {
     """
     module load multiqc/1.19
 
-    cat ${fastp_data}} ${star_data} > all_data.txt
+    cat ${fastp_data} ${star_data} > all_data.txt
 
     multiqc \
         --file-list all_data.txt \
