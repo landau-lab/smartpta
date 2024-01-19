@@ -3,7 +3,7 @@ params.annovar_path = "/gpfs/commons/groups/landau_lab/tprieto/apps/annovar/"
 process Annovar {
     if ("${workflow.stubRun}" == "false") {
         memory '256 GB'
-        cpus 18
+        cpus 6
         queue 'bigmem'
     }
     tag "annotation"
@@ -49,7 +49,7 @@ process Annovar {
 process AnnovarRAMDisk {
     if ("${workflow.stubRun}" == "false") {
         memory '256 GB'
-        cpus 18
+        cpus 6
         queue 'bigmem'
     }
     tag "annotation"
