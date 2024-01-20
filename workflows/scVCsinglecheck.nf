@@ -20,6 +20,7 @@ workflow {
     if (params.call_mito){
         MitoCall(FlowMarkDuplicates.out.dedup_bam.collect(), FlowMarkDuplicates.out.dedup_bam_index.collect())
     }
+    SingleCheck(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     CalcCont(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     if (params.use_gpu){
         UGDeepVariantGPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
@@ -37,4 +38,8 @@ workflow {
     }
     GLNexus(gvcf_list_ch)
     Annovar(GLNexus.out.joint_vcf)
+    Phyfilt(Annovar.out.annovar_vcf)
+    if (params.run_phylo){
+        CellPhy(Phyfilt.out.phyfilt_vcf)
+    }
 }
