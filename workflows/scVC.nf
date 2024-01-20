@@ -17,9 +17,6 @@ workflow {
         .map { row -> file(row.trim()) }
         .set { bams_ch }
     FlowMarkDuplicates(bams_ch.map { it })
-    if (params.call_mito){
-        MitoCall(FlowMarkDuplicates.out.dedup_bam.collect(), FlowMarkDuplicates.out.dedup_bam_index.collect())
-    }
     CalcCont(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
     if (params.use_gpu){
         UGDeepVariantGPU(FlowMarkDuplicates.out.dedup_bam, FlowMarkDuplicates.out.dedup_bam_index)
