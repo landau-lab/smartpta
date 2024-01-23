@@ -16,8 +16,9 @@ RUN apt-get -qq update && \
     libjemalloc-dev libzip-dev libsnappy-dev libbz2-dev zlib1g-dev liblzma-dev libzstd-dev \
     python3-pyvcf bcftools pv
 
-# Copy in the local source tree / build context
-ADD . /GLnexus
+# Clone the GLnexus repository
+RUN git clone https://github.com/dnanexus-rnd/GLnexus.git /GLnexus
+
 WORKDIR /GLnexus
 
 # compile GLnexus
@@ -39,4 +40,10 @@ COPY --from=builder /GLnexus/glnexus_cli /usr/local/bin/
 ADD https://github.com/mlin/spVCF/releases/download/v1.0.0/spvcf /usr/local/bin/
 RUN chmod +x /usr/local/bin/spvcf
 
-CMD glnexus_cli
+# add glnexus_cli to the path
+ENV PATH="/usr/local/bin:${PATH}"
+
+# set up default container start to run glnexus_cli
+WORKDIR /work
+
+CMD ["/bin/bash"]
