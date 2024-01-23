@@ -66,3 +66,27 @@ output
     ├── cell3.dedup.g.vcf.gz
     └── cell3.dedup.g.vcf.gz.tbi
 ```
+
+## Setting up RNA input
+
+given a list of fastq files, we want to check for ones that actually have reads in them.
+
+```bash
+#!/bin/bash
+
+while IFS= read -r symlink; do
+    target=$(readlink -f "$symlink")
+    if [ -f "$target" ]; then
+        size=$(stat -c%s "$target")
+        echo "$size $symlink"
+    else
+        echo "Symlink target does not exist - $symlink"
+    fi
+done < "all_fq.txt" > all_fq_w_size.txt
+```
+
+We can then sort by size and take the ones that are greater than some cut off.
+
+```bash
+cat all_fq_w_size.txt | sort -n | awk '$1 > 1337' | cut -d' ' -f2 | sort | xargs -n 2 > all_fq_w_reads.txt
+```
