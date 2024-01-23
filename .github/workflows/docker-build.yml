@@ -3,8 +3,12 @@ name: Docker Build
 on:
   push:
     branches: [main, ci]
+    paths:
+      - "docker/**/Dockerfile"
   pull_request:
     branches: [main, ci]
+    paths:
+      - "docker/**/Dockerfile"
 
 jobs:
   generate-matrix:
@@ -12,7 +16,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: set-matrix
         run: |
           echo "::set-output name=matrix::$(find ./docker -name 'Dockerfile' -exec dirname {} \; | jq -R -s -c 'split("\n")[:-1]')"
@@ -24,7 +28,7 @@ jobs:
       matrix:
         dir: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build Dockerfile
         run: |
           dir_name=$(basename ${{ matrix.dir }})
