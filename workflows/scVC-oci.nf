@@ -21,5 +21,5 @@ workflow {
         .collectFile(name: 'gvcfs.txt', newLine: true)
         .set { gvcf_list_ch }
     GLNexusOCI(gvcf_list_ch)
-    AnnovarOCI(GLNexus.out.joint_vcf)
+    AnnovarOCI(GLNexusOCI.out.joint_vcf)
 }
