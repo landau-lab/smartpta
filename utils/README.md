@@ -85,7 +85,7 @@ while IFS= read -r symlink; do
 done < "all_fq.txt" > all_fq_w_size.txt
 ```
 
-We can then sort by size and take the ones that are greater than some cut off.
+We can then sort by size and take the ones that are greater than some cut off. Then format the output to be used in the pipeline.
 
 ```bash
 cat all_fq_w_size.txt | sort -n | awk '$1 > 1337' | cut -d' ' -f2 | sort | xargs -n 2 > all_fq_w_reads.txt
