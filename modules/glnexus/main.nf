@@ -55,7 +55,7 @@ process GLNexusOCI {
     }
     tag "glnexus"
 
-    container 'docker://quay.io/biocontainers/glnexus:1.4.1--h40d77a6_0'
+    container 'docker://zinno/glnexus:latest'
 
     publishDir "${params.out}/glnexus", mode: 'symlink'
 
