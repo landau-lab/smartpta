@@ -15,7 +15,7 @@ nvcr.io/nvidia/clara/clara-parabricks:4.2.1-1
 ### GLnexus
 
 ```
-quay.io/biocontainers/glnexus:1.4.1--h40d77a6_0
+zinno/glnexus:latest
 ```
 
 ### Annovar
