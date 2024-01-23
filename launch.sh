@@ -21,4 +21,4 @@ fi
 
 export NXF_TEMP=$PWD/nxf-scratch
 
-nextflow workflows/scVC.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
+nextflow workflows/scVC-oci.nf -with-report report-nextflow-log.html -with-dag flowchart.html -with-timeline timeline.html -resume
