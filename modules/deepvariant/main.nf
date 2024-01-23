@@ -210,8 +210,6 @@ process UGDeepVariantPB {
 
     script:
     """
-    module load htslib/1.18
-
     pbrun deepvariant \
         --ref ${params.ref} \
         --in-bam \$(readlink -f ${bam_file})  \
