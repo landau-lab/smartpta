@@ -9,6 +9,7 @@ on:
     branches: [main, ci]
     paths:
       - "docker/**/Dockerfile"
+  workflow_dispatch:
 
 jobs:
   generate-matrix:
