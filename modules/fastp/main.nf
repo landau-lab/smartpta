@@ -37,7 +37,7 @@ process FastP {
         --average_qual 20 \
         --json \$prefix.fastp.json \
         --html \$prefix.fastp.html \
-        --failed_out \$prefix.fastp.failed.fastq.gz
+        --failed_out \$prefix.fastp.failed.fastq.gz \
         --thread ${task.cpus} \
 
     """
@@ -48,5 +48,6 @@ process FastP {
     touch ${fastqs[1].simpleName}.fastp.fastq.gz
     touch \${prefix}.fastp.json
     touch \${prefix}.fastp.html
+    touch \${prefix}.fastp.failed.fastq.gz
     """
 }
