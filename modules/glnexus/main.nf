@@ -46,3 +46,47 @@ process GLNexus {
     touch ${params.sample_id}.glnexus.vcf.gz.tbi
     """
 }
+
+process GLNexusOCI {
+    if ("${workflow.stubRun}" == "false") {
+        memory "512 GB"
+        cpus 32
+        queue "bigmem"
+    }
+    tag "glnexus"
+
+    container 'docker://quay.io/biocontainers/glnexus:1.4.1--h40d77a6_0'
+
+    publishDir "${params.out}/glnexus", mode: 'symlink'
+
+    input:
+    path(gvcf_list)
+
+
+    output:
+    path("${params.sample_id}.glnexus.vcf.gz"), emit: joint_vcf
+    path("${params.sample_id}.glnexus.vcf.gz.tbi")
+
+    script:
+    """
+    glnexus_cli \
+        --config ${moduleDir}/darkshore.glnexus.yml \
+        --list ${gvcf_list} \
+        --threads ${task.cpus} \
+        --mem-gbytes ${task.memory.toGiga()} \
+        > ${params.sample_id}.glnexus.bcf
+
+    module load bcftools/1.18
+
+    bcftools view ${params.sample_id}.glnexus.bcf -Oz > ${params.sample_id}.glnexus.vcf.gz
+    tabix -p vcf ${params.sample_id}.glnexus.vcf.gz
+    rm ${params.sample_id}.glnexus.bcf
+    rm -rf GLnexus.DB
+
+    """
+    stub:
+    """
+    touch ${params.sample_id}.glnexus.vcf.gz
+    touch ${params.sample_id}.glnexus.vcf.gz.tbi
+    """
+}
