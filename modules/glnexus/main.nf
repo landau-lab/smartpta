@@ -76,7 +76,6 @@ process GLNexusOCI {
         --mem-gbytes ${task.memory.toGiga()} \
         > ${params.sample_id}.glnexus.bcf
 
-    module load bcftools/1.18
 
     bcftools view ${params.sample_id}.glnexus.bcf -Oz > ${params.sample_id}.glnexus.vcf.gz
     tabix -p vcf ${params.sample_id}.glnexus.vcf.gz
