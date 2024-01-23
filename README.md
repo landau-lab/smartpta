@@ -1,5 +1,7 @@
 # darkshore
 
+[![Docker Build](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml/badge.svg)](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml)
+
 ### Nextflow pipelines for the worlds biggest single-cell multiomic phylogenies
 
 ## Setup & Test run
