@@ -23,7 +23,7 @@ process Annovar {
 
     ${params.annovar_path}/table_annovar.pl \
         ${variant_file} \
-        ${params.annovar_path}//home/TOOLS/tools/annovar/current/bin/humandb/ \
+        ${params.annovar_path}/humandb/ \
         -buildver hg38 \
         -out ${variant_file.simpleName} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
@@ -67,7 +67,7 @@ process AnnovarRAMDisk {
     """
     # Setting up the RAM disk
     mount -t tmpfs -o size=72G tmpfs /tmp/humandbRAMdisk/
-    cp -r ${params.annovar_path}//home/TOOLS/tools/annovar/current/bin/humandb/ /tmp/humandbRAMdisk/
+    cp -r ${params.annovar_path}/humandb/ /tmp/humandbRAMdisk/
 
     # Running ANNOVAR with the database in the RAM disk
     module load bcftools/1.18
