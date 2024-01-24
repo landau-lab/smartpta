@@ -9,7 +9,7 @@ broadinstitute/gatk:4.5.0.0
 ### Parabricks
 
 ```
-nvcr.io/nvidia/clara/clara-parabricks:4.2.1-1
+zinno/parabricks:4.2.1-1b
 ```
 
 ### GLnexus
