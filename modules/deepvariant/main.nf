@@ -195,7 +195,7 @@ process UGDeepVariantPB {
 
     tag 'ug-deepvariant'
 
-    container 'docker://zinno/parabricks:4.2.1-1b'
+    container 'docker://nvcr.io/ea-nvidia-clara-parabricks/clara-parabricks:4.1.2-1.ultimaoct2'
 
     publishDir "${params.out}/ug-deepvariant", mode: 'symlink'
 
