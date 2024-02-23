@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author: John Zinno
 # Usage: grip <file>... or echo <file>... | grip
 # Description: Pull a symlink target into its source
 #
