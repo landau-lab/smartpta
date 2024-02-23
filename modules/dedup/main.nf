@@ -83,6 +83,8 @@ process FlowMarkDuplicates {
         --TMP_DIR  \$PWD/tmp \
         --METRICS_FILE ${bam_file.baseName}.dedup.metrics.txt \
         --CREATE_INDEX true
+
+    mv ${bam_file.baseName}.dedup.bai ${bam_file.baseName}.dedup.bam.bai
     """
     stub:
     """
