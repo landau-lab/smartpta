@@ -1,5 +1,7 @@
 # List of tools used in the pipeline
 
+## DNA tools
+
 ### GATK
 
 ```
@@ -22,4 +24,12 @@ zinno/glnexus:latest
 
 ```
 zinno/annovar:latest
+```
+
+## RNA tools
+
+### TRUST4
+
+```
+quay.io/biocontainers/trust4:1.0.13--h43eeafb_0
 ```
