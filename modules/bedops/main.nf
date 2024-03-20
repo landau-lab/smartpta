@@ -47,19 +47,19 @@ process SplitVCF {
     val(interval)
 
     output:
-    path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz"), emit: split_vcf
+    path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"), emit: split_vcf
 
     script:
     """
     module load bcftools/1.18
     ln -s \$(readlink -f ${joint_vcf}).tbi . 
-    bcftools view -r ${interval} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
-    tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
+    bcftools view -r ${interval.trim()} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
+    tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
     """
     stub:
     """
-    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
-    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz.tbi
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
     """
 
 }
