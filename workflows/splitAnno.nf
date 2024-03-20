@@ -12,7 +12,7 @@ workflow {
     Annovar(SplitVCF.out.split_vcf)
     Annovar.out.annovar_vcf
         .map { vcf -> vcf.toString()}
-        .collectFile(newLine: true)
+        .collectFile(name: params.sample_id,  newLine: true)
         .set { annos }
     MergeVCFs(annos)
 }
