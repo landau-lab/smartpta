@@ -47,18 +47,19 @@ process SplitVCF {
     val(interval)
 
     output:
-    path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"), emit: split_vcf
+    path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz"), emit: split_vcf
 
     script:
     """
     module load bcftools/1.18
-    bcftools view -r ${interval} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
-    tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
+    ln -s \$(readlink -f ${joint_vcf}).tbi . 
+    bcftools view -r ${interval} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
+    tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
     """
     stub:
     """
-    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
-    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_")}.vcf.gz.tbi
     """
 
 }
@@ -84,7 +85,7 @@ process MergeVCFs {
     script:
     """
     module load bcftools/1.18
-    cat ${annos} | sort -V > tmp.list
+    awk -F'/' '{print \$NF,\$0}' ${annos} | sort -V | cut -d' ' -f2- > tmp.list
     bcftools concat --threads ${task.cpus} -f tmp.list -Oz -o ${annos.simpleName}.vcf.gz
     tabix -p vcf ${annos.simpleName}.vcf.gz
     """
