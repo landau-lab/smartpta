@@ -65,8 +65,8 @@ process SplitVCF {
 
 process MergeVCFs {
     if ("${workflow.stubRun}" == "false") {
-        memory '2 GB'
-        cpus 1
+        memory '64 GB'
+        cpus 4
         queue 'pe2'
     }
 
@@ -85,7 +85,7 @@ process MergeVCFs {
     """
     module load bcftools/1.18
     cat ${annos} | sort -V > tmp.list
-    bcftools concat -f tmp.list -Oz -o ${annos.simpleName}.vcf.gz
+    bcftools concat --threads ${task.cpus} -f tmp.list -Oz -o ${annos.simpleName}.vcf.gz
     tabix -p vcf ${annos.simpleName}.vcf.gz
     """
     stub:
