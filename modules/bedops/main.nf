@@ -17,7 +17,7 @@ process GenerateIntervals {
 
     script:
     """
-    module load bedops 2.4.35
+    module load bedops/2.4.35
 
     awk '{print \$1"\t"0"\t"\$2}' ${params.ref_idx} | head -n24 | sort-bed - | bedops --chop ${params.chop} - | sort --version-sort |  awk '{print \$1":"\$2"-"\$3}' > intervals.bed
 
@@ -25,7 +25,7 @@ process GenerateIntervals {
     """
     stub:
     """
-    module load bedops 2.4.35
+    module load bedops/2.4.35
 
     awk '{print \$1"\t"0"\t"\$2}' ${params.ref_idx} | head -n24 | sort-bed - | bedops --chop ${params.chop} - | sort --version-sort |  awk '{print \$1":"\$2"-"\$3}' > intervals.bed
     """
