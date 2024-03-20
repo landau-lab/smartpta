@@ -44,7 +44,7 @@ process SplitVCF {
 
     input:
     path(joint_vcf)
-    interval
+    val(interval)
 
     output:
     path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"), emit: split_vcf
@@ -59,6 +59,39 @@ process SplitVCF {
     """
     touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
     touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
+    """
+
+}
+
+process MergeVCFs {
+    if ("${workflow.stubRun}" == "false") {
+        memory '2 GB'
+        cpus 1
+        queue 'pe2'
+    }
+
+    tag 'bedops'
+
+    publishDir "${params.out}/annovar", mode: 'symlink'
+
+    input:
+    path(annos)
+
+
+    output:
+    path("${annos.simpleName}.vcf.gz"), emit: merged_vcf
+
+    script:
+    """
+    module load bcftools/1.18
+    cat ${annos} | sort -V > tmp.list
+    bcftools concat -f tmp.list -Oz -o ${annos.simpleName}.vcf.gz
+    tabix -p vcf ${annos.simpleName}.vcf.gz
+    """
+    stub:
+    """
+    touch ${annos.simpleName}.vcf.gz
+    touch ${annos.simpleName}.vcf.gz.tbi
     """
 
 }

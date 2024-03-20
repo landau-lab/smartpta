@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 include { Annovar } from '../modules/annovar'
-include { GenerateIntervals; SplitVCF } from '../modules/bedops'
+include { GenerateIntervals; SplitVCF; MergeVCFs } from '../modules/bedops'
 
 workflow {
     GenerateIntervals(params.ref_idx)
@@ -10,7 +10,11 @@ workflow {
         .set { intervals_chopped }
     SplitVCF( params.joint_vcf, intervals_chopped)
     Annovar(SplitVCF.out.split_vcf)
-
+    Annovar.out.annovar_vcf
+        .map { vcf -> vcf.toString()}
+        .collectFile(newLine: true)
+        .set { annos }
+    MergeVCFs(annos)
 }
     
 
