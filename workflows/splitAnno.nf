@@ -8,7 +8,7 @@ workflow {
     GenerateIntervals.out.intervals
         .splitText()
         .set { intervals_chopped }
-    SplitVCF(intervals_chopped, params.joint_vcf)
+    SplitVCF( params.joint_vcf, intervals_chopped)
     Annovar(SplitVCF.out.split_vcf)
 
 }

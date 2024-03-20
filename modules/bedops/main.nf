@@ -44,21 +44,21 @@ process SplitVCF {
 
     input:
     path(joint_vcf)
-    val(interval)
+    interval
 
     output:
-    path("${joint_vcf.baseName}_${interval}.vcf.gz"), emit: split_vcf
+    path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"), emit: split_vcf
 
     script:
     """
     module load bcftools/1.18
-    bcftools view -r ${interval} ${joint_vcf} -Oz > ${joint_vcf.baseName}_${interval}.vcf.gz
-    tabix -p vcf ${joint_vcf.baseName}_${interval}.vcf.gz
+    bcftools view -r ${interval} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
+    tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
     """
     stub:
     """
-    touch ${joint_vcf.baseName}_${interval}.vcf.gz
-    touch ${joint_vcf.baseName}_${interval}.vcf.gz.tbi
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
+    touch ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz.tbi
     """
 
 }
