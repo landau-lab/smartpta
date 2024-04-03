@@ -18,10 +18,15 @@ gsutil -m cp -r "gs://genomics-public-data/references/hg38" . || { log "Error do
 log "Downloading somatic best practices resources..."  
 gsutil -m cp -r "gs://gatk-best-practices/somatic-hg38" . || { log "Error downloading somatic resources"; exit 1; }
 
-log "Downloading RNA references from 10X..."
-curl -O "https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz" || { log "Error downloading 10X RNA refs"; exit 1; }
-tar -xzf refdata-gex-GRCh38-2024-A.tar.gz || { log "Error extracting 10X RNA refs"; exit 1; }
-gunzip refdata-gex-GRCh38-2024-A/genes/genes.gtf.gz || { log "Error unzipping genes.gtf"; exit 1; }
+log "Downloading RNA references from 10X (2024 version)..."
+curl -O "https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz" || { log "Error downloading 10X RNA refs (2024 version)"; exit 1; }
+tar -xzf refdata-gex-GRCh38-2024-A.tar.gz || { log "Error extracting 10X RNA refs (2024 version)"; exit 1; }
+gunzip refdata-gex-GRCh38-2024-A/genes/genes.gtf.gz || { log "Error unzipping genes.gtf (2024 version)"; exit 1; }
 rm refdata-gex-GRCh38-2024-A.tar.gz
+log "Downloading RNA references from 10X (2020 version)..."
+curl -O "https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2020-A.tar.gz" || { log "Error downloading 10X RNA refs (2020)"; exit 1; }
+tar -xzf refdata-gex-GRCh38-2020-A.tar.gz || { log "Error extracting 10X RNA refs (2020)"; exit 1; }
+rm refdata-gex-GRCh38-2020-A.tar.gz
+
 
 log "Reference setup completed successfully"
