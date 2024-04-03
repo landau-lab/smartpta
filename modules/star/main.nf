@@ -1,5 +1,3 @@
-params.star_ref = "/gpfs/commons/groups/landau_lab/rraviram/hg38/refdata-gex-GRCh38-2020-A/star/"
-
 process Star {
     if ("${workflow.stubRun}" == "false") {
         memory "32 GB"
