@@ -5,7 +5,6 @@ process CalcCont {
     if ("${workflow.stubRun}" == "false") {
         memory '2 GB'
         cpus 1
-        queue 'pe2'
     }
 
     tag 'crosscontamination'
@@ -43,7 +42,6 @@ process CalcContOCI {
     if ("${workflow.stubRun}" == "false") {
         memory '2 GB'
         cpus 1
-        queue 'pe2'
     }
 
     tag 'crosscontamination'

@@ -2,7 +2,6 @@ process Star {
     if ("${workflow.stubRun}" == "false") {
         memory "32 GB"
         cpus 6
-        queue "pe2"
     }
     tag "align"
 

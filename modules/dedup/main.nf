@@ -2,7 +2,6 @@ process MarkDuplicatesSpark {
     if ("${workflow.stubRun}" == "false") {
         memory '64 GB'
         cpus 8
-        queue 'pe2'
     }
 
     tag 'dedup'
@@ -50,7 +49,6 @@ process FlowMarkDuplicates {
     if ("${workflow.stubRun}" == "false") {
         memory '16 GB'
         cpus 2
-        queue 'pe2'
     }
 
     tag 'dedup'
@@ -98,7 +96,6 @@ process FlowMarkDuplicatesOCI {
     if ("${workflow.stubRun}" == "false") {
         memory '16 GB'
         cpus 2
-        queue 'pe2'
     }
 
     tag 'dedup'

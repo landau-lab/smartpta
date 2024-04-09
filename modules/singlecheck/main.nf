@@ -2,7 +2,6 @@ process SingleCheck {
     if ("${workflow.stubRun}" == "false") {
         memory '6 GB'
         cpus 1
-        queue 'pe2'
     }
 
     tag 'dispersion'

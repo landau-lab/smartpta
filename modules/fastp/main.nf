@@ -4,7 +4,6 @@ process FastP {
     if ("${workflow.stubRun}" == "false") {
         memory "8 GB"
         cpus 4
-        queue "pe2"
     }
     tag "trimming"
 

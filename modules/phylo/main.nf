@@ -2,7 +2,6 @@ process CellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '512 GB'
         cpus 36
-        queue 'bigmem'
     }
     tag "phylo"
 
@@ -47,7 +46,6 @@ process MLSearchCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '4 GB'
         cpus 4
-        queue 'pe2'
     }
     tag "tree-search"
 
@@ -90,7 +88,6 @@ process BootstrapsCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '4 GB'
         cpus 4
-        queue 'pe2'
     }
     tag "tree-validation"
 
@@ -130,7 +127,6 @@ process SupportCellPhy {
     if ("${workflow.stubRun}" == "false") {
         memory '8 GB'
         cpus 4
-        queue 'pe2'
     }
     tag "tree-support"
 

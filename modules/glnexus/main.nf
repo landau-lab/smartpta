@@ -2,7 +2,6 @@ process GLNexus {
     if ("${workflow.stubRun}" == "false") {
         memory "512 GB"
         cpus 32
-        queue "bigmem"
     }
     tag "glnexus"
 
@@ -51,7 +50,6 @@ process GLNexusOCI {
     if ("${workflow.stubRun}" == "false") {
         memory "512 GB"
         cpus 32
-        queue "bigmem"
     }
     tag "glnexus"
 

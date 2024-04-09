@@ -2,7 +2,6 @@ process HTSeq {
     if ("${workflow.stubRun}" == "false") {
         memory "4 GB"
         cpus 1
-        queue "pe2"
     }
     tag "count"
 

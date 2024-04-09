@@ -6,7 +6,6 @@ process UGDeepVariantGPU {
     if ("${workflow.stubRun}" == "false") {
         memory '56 GB'
         cpus 10
-        queue 'gpu'
         accelerator 1
     }
 
@@ -136,7 +135,6 @@ process ILDeepVariant {
     if ("${workflow.stubRun}" == "false") {
         memory '56 GB'
         cpus 10
-        queue 'gpu'
         accelerator 1
     }
 
@@ -189,7 +187,6 @@ process UGDeepVariantPB {
     if ("${workflow.stubRun}" == "false") {
         memory '56 GB'
         cpus 10
-        queue 'gpu'
         accelerator 1
     }
 

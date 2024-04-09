@@ -2,7 +2,6 @@ process RNAMultiQC {
     if ("${workflow.stubRun}" == "false") {
         memory "16 GB"
         cpus 4
-        queue "pe2"
     }
     tag "report"
 

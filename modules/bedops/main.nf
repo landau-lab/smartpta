@@ -2,7 +2,6 @@ process GenerateIntervals {
     if ("${workflow.stubRun}" == "false") {
         memory '2 GB'
         cpus 1
-        queue 'pe2'
     }
 
     tag 'bedops'
@@ -35,7 +34,6 @@ process SplitVCF {
     if ("${workflow.stubRun}" == "false") {
         memory '2 GB'
         cpus 1
-        queue 'pe2'
     }
 
     tag 'bedops'
@@ -68,7 +66,6 @@ process MergeVCFs {
     if ("${workflow.stubRun}" == "false") {
         memory '64 GB'
         cpus 4
-        queue 'pe2'
     }
 
     tag 'bedops'

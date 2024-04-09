@@ -2,7 +2,6 @@ process MitoCall {
     if ("${workflow.stubRun}" == "false") {
         memory '100 GB'
         cpus 12
-        queue 'pe2'
     }
 
     conda "${moduleDir}/env.yml"
