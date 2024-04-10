@@ -2,7 +2,7 @@
 
 include { SplitAnno } from './subworkflows/splitAnno.nf'
 
-workflow Anno {
-    SplitAnno(params.joint_vcf)
+workflow {
+    SplitAnno(Channel.fromPath(params.joint_vcf))
 }
 
