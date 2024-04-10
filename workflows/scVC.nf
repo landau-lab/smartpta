@@ -33,4 +33,5 @@ workflow {
     GLNexus(gvcf_list_ch)
     PreFilter(GLNexus.out.joint_vcf)
     SplitAnno(PreFilter.out.prefilter_vcf)
+    AnnoFilter(SplitAnno.out)
 }
