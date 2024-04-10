@@ -4,7 +4,8 @@ include { FlowMarkDuplicates } from '../modules/dedup'
 include { UGDeepVariantGPU; UGDeepVariantCPU } from '../modules/deepvariant'
 include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
-include { Annovar } from '../modules/annovar'
+include { PreFilter; AnnoFilter } from '../modules/phyfilt'
+include { SplitAnno } from '../workflows/splitAnno.nf'
 
 
 workflow {
@@ -30,5 +31,7 @@ workflow {
             .set { gvcf_list_ch }
     }
     GLNexus(gvcf_list_ch)
-    Annovar(GLNexus.out.joint_vcf)
+    PreFilter(GLNexus.out.joint_vcf)
+    SplitAnno(PreFilter.out.prefilter_vcf)
+    AnnoFilter(SplitAnno.out.merged_vcf)
 }
