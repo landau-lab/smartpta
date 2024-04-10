@@ -4,7 +4,7 @@ process MitoCall {
         cpus 12
     }
 
-    conda "${moduleDir}/env.yml"
+    container 'docker://quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1'
 
     tag 'mgatk'
 
