@@ -26,10 +26,24 @@ zinno/glnexus:latest
 zinno/annovar:latest
 ```
 
+## MGATK
+
+```
+quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1
+```
+
 ## RNA tools
 
 ### TRUST4
 
 ```
 quay.io/biocontainers/trust4:1.0.13--h43eeafb_0
+```
+
+## Generic
+
+### BioUtils
+
+```
+zinno/bioutils:latest
 ```
