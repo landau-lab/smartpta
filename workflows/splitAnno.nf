@@ -4,6 +4,10 @@ include { Annovar } from '../modules/annovar'
 include { GenerateIntervals; SplitVCF; MergeVCFs } from '../modules/bedops'
 
 workflow SplitAnno {
+    take:
+    vcf_ch
+
+    main:
     GenerateIntervals(params.ref_idx)
     GenerateIntervals.out.intervals
         .splitText()
