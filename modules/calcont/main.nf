@@ -1,6 +1,3 @@
-params.res_dir="/gpfs/commons/groups/landau_lab/tprieto/gatk-bundle/hg38"
-params.exac_file="bestpractices/small_exac_common_3.hg38.vcf.gz"
-
 process CalcCont {
     if ("${workflow.stubRun}" == "false") {
         memory '2 GB'
@@ -23,8 +20,8 @@ process CalcCont {
     module load gatk/4.1.8.1
     gatk GetPileupSummaries \
         -I ${bam_file} \
-        -V ${params.res_dir}/${params.exac_file} \
-        -L ${params.res_dir}/${params.exac_file} \
+        -V ${params.resource_dir}/somatic-hg38/small_exac_common_3.hg38.vcf.gz \
+        -L ${params.resource_dir}/somatic-hg38/small_exac_common_3.hg38.vcf.gz \
         -O Getpileupsummaries.${bam_file.baseName}.table
 
     gatk CalculateContamination \
@@ -61,8 +58,8 @@ process CalcContOCI {
     """
     gatk GetPileupSummaries \
         -I ${bam_file} \
-        -V ${params.res_dir}/${params.exac_file} \
-        -L ${params.res_dir}/${params.exac_file} \
+        -V ${params.resource_dir}/somatic-hg38/small_exac_common_3.hg38.vcf.gz \
+        -L ${params.resource_dir}/somatic-hg38/small_exac_common_3.hg38.vcf.gz \
         -O Getpileupsummaries.${bam_file.baseName}.table
 
     gatk CalculateContamination \
