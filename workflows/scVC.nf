@@ -5,7 +5,7 @@ include { UGDeepVariantGPU; UGDeepVariantCPU } from '../modules/deepvariant'
 include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
 include { PreFilter; AnnoFilter } from '../modules/phyfilt'
-include { SplitAnno } from '../workflows/splitAnno.nf'
+include { SplitAnno } from './subworkflows/splitAnno.nf'
 
 
 workflow {
@@ -33,5 +33,4 @@ workflow {
     GLNexus(gvcf_list_ch)
     PreFilter(GLNexus.out.joint_vcf)
     SplitAnno(PreFilter.out.prefilter_vcf)
-    AnnoFilter(SplitAnno.out.merged_vcf)
 }
