@@ -3,7 +3,7 @@
 include { Annovar } from '../modules/annovar'
 include { GenerateIntervals; SplitVCF; MergeVCFs } from '../modules/bedops'
 
-workflow {
+workflow SplitAnno {
     GenerateIntervals(params.ref_idx)
     GenerateIntervals.out.intervals
         .splitText()
