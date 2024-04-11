@@ -22,3 +22,31 @@ process MergeCounts {
     touch ${params.sample_id}.counts.tab
     """
 }
+
+process VarCount {
+    if ("${workflow.stubRun}" == "false") {
+        memory "4 GB"
+        cpus 1
+    }
+    tag "nrnv"
+
+    publishDir "${params.out}/varcount", mode: 'symlink'
+
+    input:
+    path(vcf)
+
+    output:
+    path("${vcf.simpleName}_NR.tsv")
+    path("${vcf.simpleName}_NV.tsv")
+
+    script:
+    """
+    ${moduleDir}/varcount.sh ${vcf}
+    """
+    stub:
+    """
+    touch ${vcf.simpleName}_NR.tsv
+    touch ${vcf.simpleName}_NV.tsv
+    """
+}
+
