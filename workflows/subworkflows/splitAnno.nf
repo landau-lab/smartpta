@@ -12,7 +12,7 @@ workflow SplitAnno {
     GenerateIntervals.out.intervals
         .splitText()
         .set { intervals_chopped }
-    interval_chopped
+    intervals_chopped
         .combine(vcf_ch)
         .set { intervals_with_vcf }
     SplitVCF(intervals_with_vcf)
