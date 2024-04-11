@@ -41,8 +41,7 @@ process SplitVCF {
     publishDir "${params.out}/chunks", mode: 'symlink'
 
     input:
-    path(joint_vcf)
-    val(interval)
+    tuple val(interval), path(vcf) from intervals_with_vcf
 
     output:
     path("${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz"), emit: split_vcf
