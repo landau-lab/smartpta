@@ -22,10 +22,12 @@ process GLNexus {
 
     #find unique sample directories
     gvcf_dirs=\$(awk --field-separator '/' 'BEGIN{OFS="/"}{\$NF=""; print \$0}' ${gvcf_list} | sort | uniq | paste -sd,)
+    
+    cp ${moduleDir}/darkshore.glnexus.yml .
 
     singularity run --bind \$(dirname \$(readlink -f ${gvcf_list})),\$PWD,\$gvcf_dirs /nfs/sw/glnexus/glnexus-1.4.1/glnexus_cli.sif \
         glnexus_cli \
-        --config ${moduleDir}/darkshore.glnexus.yml \
+        --config darkshore.glnexus.yml \
         --list ${gvcf_list} \
         --threads ${task.cpus} \
         --mem-gbytes ${task.memory.toGiga()} \
