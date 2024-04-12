@@ -16,19 +16,16 @@
    nextflow workflows/scVC.nf -stub-run -profile stub
 
    #explore example output
-   tree -C
+   tree -C output
 ```
-
-Right now only runs on NYGC cluster
 
 ## Usage
 
-### scVariantCalling (only pipeline currently available)
+### scVariantCalling
 
 This will run the following steps:
 
-- MarkDuplicates
-- SingleCheck
+- Duplicate Marking
 - Contamination Estimate
 - UG DeepVariant
 - GLNexus joint genotyping
@@ -38,7 +35,7 @@ This will run the following steps:
 Create a bam list
 
 ```bash
-   #bam_list.txt
+   #e.g. bam_list.txt
    /path/to/bam1.bam
    /path/to/bam2.bam
    /path/to/bam3.bam
@@ -46,4 +43,26 @@ Create a bam list
 
 ```bash
    nextflow workflows/scVC.nf --bam_list <bam_list> --sample_id <sample_id>
+```
+
+### scRNAseq Analysis
+
+This will run the following steps:
+
+- Quality control with FastP
+- Alignment with STAR
+- Quantification with HTSeq
+- Merging of counts
+- Quality control report with MultiQC
+
+Create an RNA-seq fastq list
+```bash
+   #e.g. rna_fastq_pairs.txt
+   /path/to/fastq1_R1.fastq.gz /path/to/fastq1_R2.fastq.gz
+   /path/to/fastq2_R1.fastq.gz /path/to/fastq2_R2.fastq.gz
+   /path/to/fastq3_R1.fastq.gz /path/to/fastq3_R2.fastq.gz
+```
+
+```bash
+nextflow workflows/scRNA.nf --rna_fastq_table <rna_fastq_pairs> --sample_id <sample_id>
 ```
