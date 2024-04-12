@@ -5,6 +5,8 @@ process PreFilter {
     }
     tag "filtering"
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/prefilter", mode: 'symlink'
 
     input:
@@ -17,7 +19,7 @@ process PreFilter {
 
     script:
     """
-    module load bcftools/1.18
+
     bcftools filter -e 'QUAL < 30 || F_MISSING > 0.5 || TYPE != "snp" ||  STRLEN(REF) != 1 || STRLEN(ALT) != 1  || MEDIAN(FMT/DP)<8' ${annotated_vcf} -Oz -o ${annotated_vcf.simpleName}.prefilter.vcf.gz
     tabix -p vcf ${annotated_vcf.simpleName}.prefilter.vcf.gz
 
@@ -37,6 +39,8 @@ process AnnoFilter {
     }
     tag "filtering"
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/annofilter", mode: 'symlink'
 
     input:
@@ -49,7 +53,7 @@ process AnnoFilter {
 
     script:
     """
-    module load bcftools/1.18
+
     bcftools filter -e 'INFO/avsnp150!="."' ${annotated_vcf} -Oz -o ${annotated_vcf.simpleName}.annofilter.vcf.gz
     tabix -p vcf ${annotated_vcf.simpleName}.annofilter.vcf.gz
 
@@ -69,6 +73,8 @@ process Phyfilt {
     }
     tag "filtering"
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/phyfilt", mode: 'symlink'
 
     input:
@@ -81,7 +87,7 @@ process Phyfilt {
 
     script:
     """
-    module load bcftools/1.18
+
     bcftools filter -e 'INFO/avsnp150!="." || QUAL < 30 || F_MISSING > 0.5 || TYPE != "snp" ||  STRLEN(REF) != 1 || STRLEN(ALT) != 1  || AC < 2 || MEDIAN(FMT/DP)<8' ${annotated_vcf} -Oz -o ${annotated_vcf.simpleName}.phyfilt.vcf.gz
     tabix -p vcf ${annotated_vcf.simpleName}.phyfilt.vcf.gz
 

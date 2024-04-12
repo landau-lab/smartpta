@@ -6,6 +6,8 @@ process GenerateIntervals {
 
     tag 'bedops'
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/bedops", mode: 'symlink'
 
     input:
@@ -16,16 +18,10 @@ process GenerateIntervals {
 
     script:
     """
-    module load bedops/2.4.35
-
     awk '{print \$1"\t"0"\t"\$2}' ${params.ref_idx} | head -n24 | sort-bed - | bedops --chop ${params.chop} - | sort --version-sort |  awk '{print \$1":"\$2"-"\$3}' > intervals.bed
-
-
     """
     stub:
     """
-    module load bedops/2.4.35
-
     awk '{print \$1"\t"0"\t"\$2}' ${params.ref_idx} | head -n24 | sort-bed - | bedops --chop ${params.chop} - | sort --version-sort |  awk '{print \$1":"\$2"-"\$3}' > intervals.bed
     """
 }
@@ -38,6 +34,8 @@ process SplitVCF {
 
     tag 'bedops'
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/chunks", mode: 'symlink'
 
     input:
@@ -48,7 +46,6 @@ process SplitVCF {
 
     script:
     """
-    module load bcftools/1.18
     ln -s \$(readlink -f ${joint_vcf}).tbi . 
     bcftools view -r ${interval.trim()} ${joint_vcf} -Oz > ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
     tabix -p vcf ${joint_vcf.simpleName}_${interval.replaceAll("[:-]", "_").trim()}.vcf.gz
@@ -69,6 +66,8 @@ process MergeVCFs {
 
     tag 'bedops'
 
+    container 'docker://zinno/bioutils:latest'
+
     publishDir "${params.out}/annovar", mode: 'symlink'
 
     input:
@@ -80,7 +79,6 @@ process MergeVCFs {
 
     script:
     """
-    module load bcftools/1.18
     awk -F'/' '{print \$NF,\$0}' ${annos} | sort -V | cut -d' ' -f2- > tmp.list
     bcftools concat --threads ${task.cpus} -f tmp.list -Oz -o ${annos.simpleName}.vcf.gz
     tabix -p vcf ${annos.simpleName}.vcf.gz
