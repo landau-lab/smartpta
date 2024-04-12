@@ -10,6 +10,7 @@
 
 
 module load anaconda3
+module load singularity/3.8.6
 module load nextflow/22.10.4
 
 eval "$(conda shell.bash hook)"
