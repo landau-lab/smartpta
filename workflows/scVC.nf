@@ -5,7 +5,7 @@ include { UGDeepVariantGPU; UGDeepVariantCPU } from '../modules/deepvariant'
 include { CalcCont } from '../modules/calcont'
 include { GLNexus } from '../modules/glnexus'
 include { PreFilter; AnnoFilter } from '../modules/phyfilt'
-include { SplitAnno } from 'subworkflows/splitAnno.nf'
+include { SplitAnno } from './subworkflows/splitAnno.nf'
 
 
 workflow {
