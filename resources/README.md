@@ -12,6 +12,13 @@ We also use resources from the somatic best practices bucket:
 gsutil -m cp -r "gs://gatk-best-practices/somatic-hg38" .
 ```
 
+We also want to download the hg38 annovar dbs:
+avsnp150, clinvar_20220320, cosmic70, dbnsfp42c, exac03,and refGene
+
+```
+curl -O "http://www.openbioinformatics.org/annovar/download/${db}.txt.gz"
+```
+
 To included references for RNA workflows we can pull them from 10X:
 
 ```
@@ -26,6 +33,7 @@ The resource dir then should look like:
 ```
 .
 ├── hg38
+├── humandb
 ├── refdata-gex-GRCh38-2024-A
 └── somatic-hg38
 ```
