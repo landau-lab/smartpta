@@ -22,7 +22,7 @@ process Annovar {
 
     ${params.annovar_path}/table_annovar.pl \
         ${variant_file} \
-        ${params.annovar_path}/humandb/ \
+        ${params.resource_dir}/humandb/ \
         -buildver hg38 \
         -out ${variant_file.simpleName} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
@@ -66,7 +66,7 @@ process AnnovarRAMDisk {
     """
     # Setting up the RAM disk
     mount -t tmpfs -o size=72G tmpfs /tmp/humandbRAMdisk/
-    cp -r ${params.annovar_path}/humandb/ /tmp/humandbRAMdisk/
+    cp -r ${params.resource_dir}/humandb/ /tmp/humandbRAMdisk/
 
     # Running ANNOVAR with the database in the RAM disk
     module load bcftools/1.18
@@ -121,52 +121,9 @@ process AnnovarOCI {
 
     script:
     """
-
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        exac03 \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        refGene \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        dbnsfp42c \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-    
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        cosmic70 \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        avsnp150 \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-
-    annotate_variation.pl \
-        -buildver hg38 \
-        -downdb \
-        -webfrom annovar \
-        clinvar_20220320 \
-        /home/TOOLS/tools/annovar/current/bin/humandb/
-
     table_annovar.pl \
         ${variant_file} \
-        /home/TOOLS/tools/annovar/current/bin/humandb/ \
+        ${params.resource_dir}/humandb/ \
         -buildver hg38 \
         -out ${variant_file.simpleName} \
         -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
