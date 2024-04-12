@@ -1,6 +1,6 @@
 process CalcCont {
     if ("${workflow.stubRun}" == "false") {
-        memory '2 GB'
+        memory '4 GB'
         cpus 1
     }
 
