@@ -37,3 +37,5 @@ The resource dir then should look like:
 ├── refdata-gex-GRCh38-2024-A
 └── somatic-hg38
 ```
+Once you are done setting up the resources, be sure to update the `nextflow.config` file with the correct paths for the resources. You just need to provide the path to the `ref_bundle` variable at the top of the file.
+
