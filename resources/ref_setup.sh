@@ -5,7 +5,6 @@ log() {
   echo "$(date): $1" 
 }
 
-# Check if gsutil and curl are available
 for cmd in gsutil curl; do
   if ! command -v $cmd &> /dev/null; then
     log "Error: $cmd command not found."
@@ -22,14 +21,18 @@ gsutil -m cp -r "gs://gatk-best-practices/somatic-hg38" . || { log "Error downlo
 log "Downloading and setting up ANNOVAR databases..."
 mkdir -p humandb
 cd humandb
-declare -a dbs=("avsnp150" "clinvar_20220320" "cosmic70" "dbnsfp42c" "exac03" "refGene")
+declare -a dbs=("avsnp150" "clinvar_20220320" "cosmic70" "dbnsfp42c" "exac03")
 for db in "${dbs[@]}"; do
   log "Downloading $db database..."
   curl -s "http://www.openbioinformatics.org/annovar/download/hg38_${db}.txt.gz" | gunzip -c > "hg38_${db}.txt" || { log "Error downloading or decompressing $db"; exit 1; }
-  if [[ $db != "refGene" ]]; then # refGene does not have an index file
-    log "Downloading index for $db database..."
-    curl -s "http://www.openbioinformatics.org/annovar/download/hg38_${db}.txt.idx.gz" | gunzip -c > "hg38_${db}.txt.idx" || { log "Error downloading or decompressing index of $db"; exit 1; }
-  fi
+  log "Downloading index for $db database..."
+  curl -s "http://www.openbioinformatics.org/annovar/download/hg38_${db}.txt.idx.gz" | gunzip -c > "hg38_${db}.txt.idx" || { log "Error downloading or decompressing index of $db"; exit 1; }
+done
+log "Downloading refGene database..."
+declare -a fa_dbs=("hg38_refGene.txt" "hg38_refGeneMrna.fa" "hg38_refGeneVersion.txt" "hg38_refGeneWithVerMrna.fa" "hg38_refGeneWithVer.txt")
+for db in "${fa_dbs[@]}"; do
+  log "Downloading $db..."
+  curl -s "http://www.openbioinformatics.org/annovar/download/${db}.gz" | gunzip -c > "$db" || { log "Error downloading or decompressing $db"; exit 1; }
 done
 cd ..
 
