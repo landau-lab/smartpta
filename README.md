@@ -38,7 +38,7 @@ More information on the reference data bundle can be found [here](https://github
 
 ## Usage
 
-### scVariantCalling
+### scVariantCalling (scVC.nf)
 
 This will run the following steps:
 
@@ -62,7 +62,7 @@ Create a bam list
    nextflow workflows/scVC.nf --bam_list <bam_list> --sample_id <sample_id>
 ```
 
-### scRNAseq Analysis
+### scRNAseq Analysis (scRNA.nf)
 
 This will run the following steps:
 
