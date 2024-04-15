@@ -22,7 +22,7 @@ process HTSeq {
         --order pos \
         --stranded yes \
         --minaqual 10 \
-        --type exon \
+        --type ${params.htseq_type} \
         --idattr gene_id \
         --mode union \
         ${bam} \
