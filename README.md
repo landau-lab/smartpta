@@ -4,20 +4,37 @@
 
 ### Nextflow pipelines for the worlds biggest single-cell multiomic phylogenies
 
-## Setup & Test run
+## Quick start & Test run
 
 ```bash
    git clone https://github.com/jzinno/darkshore.git
 
    cd darkshore
 
-   module load nextflow/22.10.4
-
    nextflow workflows/scVC.nf -stub-run -profile stub
 
    #explore example output
    tree -C output
 ```
+
+## Installation
+
+### Requirements
+
+These workflows were developed using the following:
+
+- Nextflow 22.10.4+
+- Singularity 3.8.6+
+
+The pipelines will automatically pull the required containers when run. Our reference data bundle is required in order to run the pipelines, in order to download the required files run:
+
+```bash
+   cd resources
+   ./ref_setup.sh
+   cd ..
+```
+
+More information on the reference data bundle can be found [here](https://github.com/jzinno/darkshore/tree/main/resources).
 
 ## Usage
 
@@ -56,6 +73,7 @@ This will run the following steps:
 - Quality control report with MultiQC
 
 Create an RNA-seq fastq list
+
 ```bash
    #e.g. rna_fastq_pairs.txt
    /path/to/fastq1_R1.fastq.gz /path/to/fastq1_R2.fastq.gz
