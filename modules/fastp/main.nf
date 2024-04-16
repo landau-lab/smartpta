@@ -7,6 +7,8 @@ process FastP {
     }
     tag "trimming"
 
+    container 'docker://zinno/rnatools:latest'
+
     publishDir "${params.out}/fastp", mode: 'symlink'
 
     input:
@@ -22,8 +24,6 @@ process FastP {
 
     script:
     """
-    module load fastp/0.23.1
-
     prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
 
     fastp \

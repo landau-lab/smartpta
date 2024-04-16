@@ -5,6 +5,8 @@ process RNAMultiQC {
     }
     tag "report"
 
+    container 'docker://zinno/rnatools:latest'
+
     publishDir "${params.out}/multiqc", mode: 'symlink'
 
     input:
@@ -17,15 +19,11 @@ process RNAMultiQC {
 
     script:
     """
-    module load multiqc/1.19
-
     cat ${fastp_data} ${star_data} > all_data.txt
 
     multiqc \
         --file-list all_data.txt \
         --filename ${params.sample_id}_multiqc_report.html
-
-
     """
     stub:
     """
