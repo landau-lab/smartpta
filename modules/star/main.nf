@@ -5,6 +5,8 @@ process Star {
     }
     tag "align"
 
+    container 'docker://zinno/rnatools:latest'
+
     publishDir "${params.out}/star", mode: 'symlink'
 
     input:
@@ -20,9 +22,6 @@ process Star {
 
     script:
     """
-    module load star/2.4.2a
-    module load samtools/1.18
-
     prefix=\$(echo "${trimmed[0].simpleName}" | rev | cut -d'_' -f2- | rev)
 
     STAR \

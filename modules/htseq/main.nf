@@ -5,6 +5,8 @@ process HTSeq {
     }
     tag "count"
 
+    container 'docker://zinno/rnatools:latest'
+
     publishDir "${params.out}/htseq", mode: 'symlink'
 
     input:
@@ -15,8 +17,6 @@ process HTSeq {
 
     script:
     """
-    module load HTSeq/0.6.1
-
     htseq-count \
         --format bam \
         --order pos \
