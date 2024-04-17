@@ -17,7 +17,7 @@ process FastP {
 
     output:
     tuple path("${fastqs[0].simpleName}.fastp.fastq.gz"), path("${fastqs[1].simpleName}.fastp.fastq.gz"), emit: trimmed
-    path("*.fastp.json"), emit: fastp_json
+    path("*.json"), emit: fastp_json
     path("*.fastp.html")
     path("*.fastp.failed.fastq.gz"), emit: failed
 
