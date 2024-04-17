@@ -32,9 +32,11 @@ process FastP {
         -o ${fastqs[0].simpleName}.fastp.fastq.gz \
         -O ${fastqs[1].simpleName}.fastp.fastq.gz \
         --overrepresentation_analysis \
+        --detect_adapter_for_pe \
         --adapter_fasta ${params.adapters} \
+        --trim_poly_x \
         --average_qual 20 \
-        --json \$prefix.fastp.json \
+        --json \$prefix.json \
         --html \$prefix.fastp.html \
         --failed_out \$prefix.fastp.failed.fastq.gz \
         --thread ${task.cpus} \
