@@ -24,7 +24,7 @@ process RNAMultiQC {
     cat ${fastp_data} ${star_data} > all_data.txt
 
     multiqc \
-        --config-file ${params.multiqc_config} \
+        --config ${params.multiqc_config} \
         --file-list all_data.txt \
         --filename ${params.sample_id}_multiqc_report.html
     """
