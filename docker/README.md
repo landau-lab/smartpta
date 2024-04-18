@@ -14,6 +14,19 @@ broadinstitute/gatk:4.5.0.0
 nvcr.io/ea-nvidia-clara-parabricks/clara-parabricks:4.1.2-1.ultimaoct2
 ```
 
+### ugdv
+
+```
+zinno/ugdv:latest
+```
+
+### ugnvdv
+
+```
+zinno/ugdvnv:jedi
+zinno/ugdvnv:revendreth
+```
+
 ### GLnexus
 
 ```
