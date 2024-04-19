@@ -26,7 +26,7 @@ process UGDeepVariantGPU {
         --ref ${params.ref} \
         --in-bam ${bam_file}  \
         --out-variants ${bam_file.baseName}.g.vcf \
-        --num-gpus 1 \
+        --num-gpus ${task.accelerator} \
         --pb-model-file /opt/deepvariant/models/ultima_v1.2_model_noTF32_2208_v100_noTF32.eng \
         --channel-hmer-deletion-quality \
         --channel-hmer-insertion-quality \
@@ -123,6 +123,8 @@ process ILDeepVariant {
 
     tag 'il-deepvariant'
 
+    container 'docker://zinno/parabricks:4.2.1-1b'
+
     publishDir "${params.out}/il-deepvariant", mode: 'symlink'
 
     input:
@@ -136,20 +138,11 @@ process ILDeepVariant {
 
     script:
     """
-    module load gcloud
-    module load singularity
-    module load htslib/1.18
-
-    export SINGULARITY_DOCKER_USERNAME='_token'
-    export SINGULARITY_DOCKER_REGISTRY="gcr.io"
-    export SINGULARITY_DOCKER_PASSWORD="\$(gcloud auth print-access-token)"
-
-    singularity run --bind \$(dirname ${params.ref}),\$(dirname \$(readlink -f ${bam_file})),\$PWD --nv docker://gcr.io/nygc-comp-p-f9e9/clara-parabricks:4.1.1-1 \
-        pbrun deepvariant \
+    pbrun deepvariant \
         --ref ${params.ref} \
-        --in-bam \$(readlink -f ${bam_file})  \
-        --out-variants \$PWD/${bam_file.baseName}.g.vcf \
-        --num-gpus 1 \
+        --in-bam ${bam_file}  \
+        --out-variants ${bam_file.baseName}.g.vcf \
+        --num-gpus ${task.accelerator} \
         --gpu-num-per-partition 1 \
         --run-partition \
         --num-cpu-threads-per-stream 5 \
