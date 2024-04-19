@@ -25,7 +25,7 @@ process FlowMarkDuplicates {
     fi
 
     gatk --java-options "-Xmx12G" MarkDuplicates \
-        --FLOW_MODE true \
+        --FLOW_MODE ${params.flow_mode} \
         --INPUT ${bam_file} \
         --OUTPUT ${bam_file.baseName}.dedup.bam \
         --TMP_DIR  \$PWD/tmp \
