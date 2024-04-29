@@ -2,13 +2,9 @@
 
 include { FlowMarkDuplicates } from '../modules/dedup'
 include { UGDeepVariantGPU; UGDeepVariantCPU } from '../modules/deepvariant'
-include { SingleCheck } from '../modules/singlecheck'
 include { CalcCont } from '../modules/calcont'
-include { GLNexus } from '../modules/glnexus'
-include { Annovar } from '../modules/annovar'
-include { Phyfilt } from '../modules/phyfilt'
 include { MitoCall } from '../modules/mgatk'
-include { CellPhy } from '../modules/phylo'
+
 
 workflow {
     Channel
