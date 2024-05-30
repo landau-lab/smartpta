@@ -14,6 +14,12 @@ workflow {
         .set { fastq_ch }
     FastP( fastq_ch  )
     StarTE( FastP.out.trimmed )
+    TEcount( StarTE.out.bam )
+    TEcount.out.tecount
+        .map { counts -> counts.toString() }
+        .collectFile( name: 'te_counts.txt', newLine: true )
+        .set { te_counts_ch }
+    MergeCounts( te_counts_ch )
     FastP.out.fastp_json
         .map { fastp_data -> fastp_data.toString() }
         .collectFile( name: 'fastp_data.txt', newLine: true )
