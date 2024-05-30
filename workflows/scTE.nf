@@ -2,6 +2,8 @@
 
 include { FastP } from '../modules/fastp'
 include { StarTE } from '../modules/star'
+include { TEcount } from '../modules/tecount'
+include { MergeCounts } from '../modules/bash'
 include { RNAMultiQC } from '../modules/multiqc'
 
 workflow {
@@ -14,7 +16,7 @@ workflow {
         .set { fastq_ch }
     FastP( fastq_ch  )
     StarTE( FastP.out.trimmed )
-    TEcount( StarTE.out.bam )
+    TEcount( StarTE.out.star_bam )
     TEcount.out.tecount
         .map { counts -> counts.toString() }
         .collectFile( name: 'te_counts.txt', newLine: true )
