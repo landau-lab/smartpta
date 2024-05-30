@@ -5,7 +5,7 @@ process TEcount {
     }
     tag "align"
 
-    container 'docker://zinno/TEcount:latest'
+    container 'docker://zinno/tetranscripts:latest'
 
     publishDir "${params.out}/TEcount", mode: 'symlink'
 
