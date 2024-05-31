@@ -80,7 +80,7 @@ process StarTE {
     --twopassMode Basic \
     --outSAMtype BAM SortedByCoordinate \
     --outFileNamePrefix \${prefix}. \
-    --winAnchorMultiMapNmax 200 \
+    --winAnchorMultimapNmax 200 \
     --outFilterMultimapNmax 100 \
     --readFilesCommand zcat \
     --readFilesIn ${trimmed[0]} ${trimmed[1]} \
