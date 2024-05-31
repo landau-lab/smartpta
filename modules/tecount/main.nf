@@ -1,6 +1,6 @@
 process TEcount {
     if ("${workflow.stubRun}" == "false") {
-        memory "4 GB"
+        memory "8 GB"
         cpus 1
     }
     tag "align"
