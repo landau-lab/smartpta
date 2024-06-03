@@ -23,6 +23,31 @@ process MergeCounts {
     """
 }
 
+process MergeCountsTE {
+    if ("${workflow.stubRun}" == "false") {
+        memory "4 GB"
+        cpus 1
+    }
+    tag "collate"
+
+    publishDir "${params.out}/matrix", mode: 'symlink'
+
+    input:
+    path(count_list)
+
+    output:
+    path("${params.sample_id}.counts.tab")
+
+    script:
+    """
+    ${moduleDir}/merge_tecount.sh ${count_list} ${params.sample_id}.counts.tab
+    """
+    stub:
+    """
+    touch ${params.sample_id}.counts.tab
+    """
+}
+
 process VarCount {
     if ("${workflow.stubRun}" == "false") {
         memory "4 GB"
