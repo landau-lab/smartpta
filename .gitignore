@@ -1,3 +1,4 @@
 scratch
 utils/bash
 utils/fqmerge
+utils/subsample_vcf.sh
