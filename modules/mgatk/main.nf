@@ -1,7 +1,7 @@
 process MitoCall {
     if ("${workflow.stubRun}" == "false") {
         memory '100 GB'
-        cpus 12
+        cpus 20
     }
 
     container 'docker://quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1'
