@@ -4,7 +4,7 @@ process MitoCall {
         cpus 20
     }
 
-    container 'docker://quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1'
+    container 'docker://zinno/mgatk:latest'
 
     tag 'mgatk'
 
@@ -20,7 +20,6 @@ process MitoCall {
 
     script:
     """
-    module load R/4.1.3
     mgatk call -i \$PWD \
             --mito-genome 'hg38' \
             --output \$PWD \
