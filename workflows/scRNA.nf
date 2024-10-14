@@ -2,6 +2,7 @@
 
 include { FastP } from '../modules/fastp'
 include { Star } from '../modules/star'
+include { Trust4 } from '../modules/trust4'
 include { HTSeq } from '../modules/htseq'
 include { MergeCounts } from '../modules/bash'
 include { RNAMultiQC } from '../modules/multiqc'
@@ -16,6 +17,9 @@ workflow {
         .set { fastq_ch }
     FastP( fastq_ch  )
     Star( FastP.out.trimmed )
+    if (params.run_trust4) {
+        Trust4( FastP.out.trimmed )
+    }
     HTSeq( Star.out.star_bam )
     HTSeq.out.htseq_counts
         .map { counts -> counts.toString() }
