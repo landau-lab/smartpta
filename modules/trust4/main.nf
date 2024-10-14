@@ -34,8 +34,8 @@ process Trust4 {
     -t ${task.cpus} \
     -1 ${trimmed[0]} \
     -2 ${trimmed[1]} \
-    -f ${params.resource_dir}/TRUST4/hg38_bcrtcr.fa \
-    --ref ${params.resource_dir}/TRUST4/human_IMGT+C.fa \
+    -f ${params.trust4_vdjc} \
+    --ref ${params.trust4_ref} \
     -o \${prefix} \
 
 
