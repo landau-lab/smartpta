@@ -68,7 +68,7 @@ process MergeVCFs {
 
     container 'docker://zinno/bioutils:latest'
 
-    publishDir "${params.out}/annovar", mode: 'symlink'
+    publishDir "${params.out}/final", mode: 'symlink'
 
     input:
     path(annos)
