@@ -76,6 +76,7 @@ process MergeVCFs {
 
     output:
     path("${annos.simpleName}.vcf.gz"), emit: merged_vcf
+    path("${annos.simpleName}.vcf.gz.tbi"), emit: merged_vcf_tbi
 
     script:
     """
