@@ -24,5 +24,6 @@ workflow SplitAnno {
     MergeVCFs(annos)
 
     emit:
-    MergeVCFs.out
+    merged_vcf = MergeVCFs.out.merged_vcf
+    merged_vcf_tbi = MergeVCFs.out.merged_vcf_tbi
 }
