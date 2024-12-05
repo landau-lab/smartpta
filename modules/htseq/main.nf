@@ -20,7 +20,7 @@ process HTSeq {
     htseq-count \
         --format bam \
         --order pos \
-        --stranded yes \
+        --stranded no \
         --minaqual 10 \
         --type ${params.htseq_type} \
         --idattr gene_id \
