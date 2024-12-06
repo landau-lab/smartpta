@@ -17,7 +17,7 @@ RUN apt-get -qq update && \
     python3-pyvcf bcftools pv
 
 # Clone the GLnexus repository
-RUN git clone https://github.com/dnanexus-rnd/GLnexus.git /GLnexus
+RUN git clone https://github.com/jzinno/GLnexus.git /GLnexus
 
 WORKDIR /GLnexus
 
