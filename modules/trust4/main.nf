@@ -3,9 +3,9 @@ process Trust4 {
         memory "32 GB"
         cpus 6
     }
-    tag "align"
+    tag "tcr"
 
-    container 'docker://quay.io/biocontainers/trust4:1.0.13--h43eeafb_0'
+    container 'docker://zinno/trust4:1.1.5'
 
     publishDir "${params.out}/trust4", mode: 'symlink'
 
