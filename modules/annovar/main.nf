@@ -25,9 +25,9 @@ process Annovar {
         ${params.resource_dir}/humandb/ \
         -buildver hg38 \
         -out ${variant_file.simpleName} \
-        -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
+        -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320,gnomad40 \
         -remove \
-        -operation g,f,f,f,f,f \
+        -operation g,f,f,f,f,f,f \
         -nastring . \
         -vcfinput \
         -thread ${task.cpus}
@@ -36,60 +36,6 @@ process Annovar {
     tabix -p vcf ${variant_file.simpleName}.hg38_multianno.vcf.gz
     rm ${variant_file.simpleName}.avinput
     rm ${variant_file.simpleName}.hg38_multianno.txt
-    """
-    stub:
-    """
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    touch ${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi
-    """
-
-}
-
-process AnnovarRAMDisk {
-    if ("${workflow.stubRun}" == "false") {
-        memory '256 GB'
-        cpus 6
-    }
-    tag "annotation"
-
-    container 'docker://zinno/annovar:latest'
-
-    publishDir "${params.out}/annovar", mode: 'symlink'
-
-    input:
-    path(variant_file)
-
-    output:
-    path("${variant_file.simpleName}.hg38_multianno.vcf.gz"), emit: annovar_vcf
-    path("${variant_file.simpleName}.hg38_multianno.vcf.gz.tbi")
-
-    script:
-    """
-    # Setting up the RAM disk
-    mount -t tmpfs -o size=72G tmpfs /tmp/humandbRAMdisk/
-    cp -r ${params.resource_dir}/humandb/ /tmp/humandbRAMdisk/
-
-    # Running ANNOVAR with the database in the RAM disk
-    table_annovar.pl \
-        ${variant_file} \
-        /tmp/humandbRAMdisk/ \
-        -buildver hg38 \
-        -out ${variant_file.simpleName} \
-        -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320 \
-        -remove \
-        -operation g,f,f,f,f,f \
-        -nastring . \
-        -vcfinput \
-        -thread ${task.cpus}
-
-    bgzip -@${task.cpus} ${variant_file.simpleName}.hg38_multianno.vcf
-    tabix -p vcf ${variant_file.simpleName}.hg38_multianno.vcf.gz
-    rm ${variant_file.simpleName}.avinput
-    rm ${variant_file.simpleName}.hg38_multianno.txt
-
-    # Cleanup
-    rm -r /tmp/humandbRAMdisk/
-    umount /tmp/humandbRAMdisk/
     """
     stub:
     """
