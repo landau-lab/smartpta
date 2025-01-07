@@ -1,5 +1,11 @@
 # Setting up resources
 
+To set up the resources we include a script here that will configure them in the current directory.
+
+```
+./ref_setup.sh
+```
+
 We use a copy of the `hg38` reference bundle. You can download it via:
 
 ```
@@ -37,5 +43,5 @@ The resource dir then should look like:
 ├── refdata-gex-GRCh38-2024-A
 └── somatic-hg38
 ```
-Once you are done setting up the resources, be sure to update the `nextflow.config` file with the correct paths for the resources. You just need to provide the path to the `ref_bundle` variable at the top of the file.
 
+Once you are done setting up the resources, be sure to update the `nextflow.config` file with the correct paths for the resources. You just need to provide the path to the `ref_bundle` variable at the top of the file.
