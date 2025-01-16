@@ -3,6 +3,7 @@ process UGDeepVariantGPU {
         memory '56 GB'
         cpus 8
         accelerator 1
+        clusterOptions '--gres gpu:1'
     }
 
     tag 'ug-deepvariant'
@@ -27,7 +28,7 @@ process UGDeepVariantGPU {
         --in-bam ${bam_file}  \
         --out-variants ${bam_file.baseName}.g.vcf \
         --num-gpus 1 \
-        --pb-model-file /opt/deepvariant/models/ultima_v1.2_model_noTF32_2208_v100_noTF32.eng \
+        --pb-model-file /opt/deepvariant/models/ultima_v1.2_model_noTF32_2208_L40S.eng \
         --channel-hmer-deletion-quality \
         --channel-hmer-insertion-quality \
         --channel-non-hmer-insertion-quality \
