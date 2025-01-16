@@ -1,7 +1,7 @@
 process UGDeepVariantGPU {
     if ("${workflow.stubRun}" == "false") {
         memory '56 GB'
-        cpus 10
+        cpus 8
         accelerator 1
     }
 
@@ -26,7 +26,7 @@ process UGDeepVariantGPU {
         --ref ${params.ref} \
         --in-bam ${bam_file}  \
         --out-variants ${bam_file.baseName}.g.vcf \
-        --num-gpus ${task.accelerator} \
+        --num-gpus 1 \
         --pb-model-file /opt/deepvariant/models/ultima_v1.2_model_noTF32_2208_v100_noTF32.eng \
         --channel-hmer-deletion-quality \
         --channel-hmer-insertion-quality \
@@ -49,7 +49,7 @@ process UGDeepVariantGPU {
         --vsc-turn-on-non-hmer-ins-proxy-support \
         --gpu-num-per-partition 1 \
         --run-partition \
-        --num-cpu-threads-per-stream 5 \
+        --num-cpu-threads-per-stream 4 \
         --num-streams-per-gpu 2 \
         --gvcf
 
