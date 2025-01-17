@@ -3,6 +3,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
+#SBATCH --time=5-00:00:00
 #SBATCH --job-name=nextflow
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=jzinno@nygenome.org
