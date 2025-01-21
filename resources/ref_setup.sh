@@ -21,7 +21,7 @@ gsutil -m cp -r "gs://gatk-best-practices/somatic-hg38" . || { log "Error downlo
 log "Downloading and setting up ANNOVAR databases..."
 mkdir -p humandb
 cd humandb
-declare -a dbs=("avsnp150" "clinvar_20220320" "cosmic70" "dbnsfp42c" "exac03" "gnomad40")
+declare -a dbs=("avsnp150" "clinvar_20220320" "cosmic70" "dbnsfp42c" "exac03" "gnomad40_genome" "gnomad40_exome")
 for db in "${dbs[@]}"; do
   log "Downloading $db database..."
   curl -s "http://www.openbioinformatics.org/annovar/download/hg38_${db}.txt.gz" | gunzip -c > "hg38_${db}.txt" || { log "Error downloading or decompressing $db"; exit 1; }

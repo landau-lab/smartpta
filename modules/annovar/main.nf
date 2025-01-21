@@ -25,7 +25,7 @@ process Annovar {
         ${params.resource_dir}/humandb/ \
         -buildver hg38 \
         -out ${variant_file.simpleName} \
-        -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320,gnomad40 \
+        -protocol refGene,dbnsfp42c,cosmic70,avsnp150,exac03,clinvar_20220320,gnomad40_genome \
         -remove \
         -operation g,f,f,f,f,f,f \
         -nastring . \
