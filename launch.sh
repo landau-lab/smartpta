@@ -3,18 +3,16 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
+#SBATCH --time=5-00:00:00
 #SBATCH --job-name=nextflow
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=jzinno@nygenome.org
 #SBATCH --output=darkshore-log_%j.out
 
 
-module load anaconda3
-module load singularity/3.8.6
-module load nextflow/22.10.4
+module load singularity
+module load Nextflow/24.04.2
 
-eval "$(conda shell.bash hook)"
-conda deactivate
 
 if [ ! -d $PWD/nxf-scratch ]; then
     mkdir $PWD/nxf-scratch
