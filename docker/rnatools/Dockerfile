@@ -4,8 +4,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends procps gcc g++ 
     pip install --upgrade pip && \
     pip install HTSeq multiqc && \
     cd /usr/local/bin && \
-    wget http://opengene.org/fastp/fastp.0.23.4 && \
-    mv fastp.0.23.4 fastp && \
+    wget http://opengene.org/fastp/fastp.0.24.0 && \
+    mv fastp.0.24.0 fastp && \
     chmod a+x fastp && \
     wget https://github.com/alexdobin/STAR/archive/refs/tags/2.7.1a.zip && \
     unzip 2.7.1a.zip && \
