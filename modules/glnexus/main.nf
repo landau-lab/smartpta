@@ -4,6 +4,7 @@ process GLNexus {
     if ("${workflow.stubRun}" == "false") {
         memory "512 GB"
         cpus 32
+        time "7d"
     }
     tag "glnexus"
 
