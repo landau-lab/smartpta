@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/clara/clara-parabricks:4.2.1-1
+FROM nvcr.io/nvidia/clara/clara-parabricks:4.5.0-1
 
 # Install bgzip and tabix
 RUN apt-get update && apt-get install -y tabix \
