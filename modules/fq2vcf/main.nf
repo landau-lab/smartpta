@@ -16,32 +16,36 @@ process FastqToVCF {
     path(fastqs)
 
     output:
-    path("${fastqs[0].baseName}.bam"), emit: bam
-    path("${fastqs[0].baseName}.g.vcf.gz"), emit: gvcfs
-    path("${fastqs[0].baseName}.g.vcf.gz.tbi"), emit: gvcf_indices
+    path("*.bam"), emit: bam
+    path("*.g.vcf.gz"), emit: gvcfs
+    path("*.g.vcf.gz.tbi"), emit: gvcf_indices
 
 
     script:
     """
+    prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
+
     pbrun deepvariant_germline \
         --ref ${params.ref} \
         --in-fq ${fastqs[0]} ${fastqs[1]} \
-        --out-bam ${fastqs[0].baseName}.bam \
-        --out-variants ${fastqs[0].baseName}.g.vcf \
-        --num-gpus ${task.accelerator} \
+        --out-bam \${prefix}.bam \
+        --out-variants \${prefix}.g.vcf \
+        --read-group-sm \${prefix} \
+        --num-gpus 1 \
         --gpu-num-per-partition 1 \
         --run-partition \
         --num-cpu-threads-per-stream 5 \
         --num-streams-per-gpu 2 \
         --gvcf
 
-    bgzip -@${task.cpus} ${fastqs[0].baseName}.g.vcf
-    tabix -p vcf ${fastqs[0].baseName}.g.vcf.gz
+    bgzip -@${task.cpus} \${prefix}.g.vcf
+    tabix -p vcf \${prefix}.g.vcf.gz
     """
   stub:
     """
-    touch ${fastqs[0].baseName}.bam
-    touch ${fastqs[0].baseName}.g.vcf.gz
-    touch ${fastqs[0].baseName}.g.vcf.gz.tbi
+    prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
+    touch \${prefix}.bam
+    touch \${prefix}.g.vcf.gz
+    touch \${prefix}.g.vcf.gz.tbi
     """
 }
