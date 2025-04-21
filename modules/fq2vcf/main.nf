@@ -3,6 +3,7 @@ process FastqToVCF {
         memory '56 GB'
         cpus 10
         accelerator 1
+        clusterOptions '--gres gpu:1'
     }
 
     tag 'fq2vcf'
