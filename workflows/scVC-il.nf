@@ -15,6 +15,7 @@ workflow {
         }
         .set { fastq_ch }
     FastqToVCF( fastq_ch )
+    CalcCont(FastqToVCF.out.bam, FastqToVCF.out.bam_indices)
     FastqToVCF.out.gvcfs
         .map { gvcf -> gvcf.toString() }
         .collectFile(name: 'gvcfs.txt', newLine: true)
