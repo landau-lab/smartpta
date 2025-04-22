@@ -1,6 +1,6 @@
 process FastqToVCF {
     if ("${workflow.stubRun}" == "false") {
-        memory '110 GB'
+        memory '120 GB'
         cpus 8
         accelerator 1
         clusterOptions '--gres gpu:1'
@@ -8,7 +8,7 @@ process FastqToVCF {
 
     tag 'fq2vcf'
 
-    container 'docker://zinno/parabricks:4.2.1-1b'
+    container 'docker://zinno/parabricks:4.5.0-1b'
 
     publishDir "${params.out}/fq2vcf", mode: 'symlink'
 
@@ -27,12 +27,14 @@ process FastqToVCF {
     prefix=\$(echo "${fastqs[0].simpleName}" | rev | cut -d'_' -f2- | rev)
 
     pbrun deepvariant_germline \
-        --ref ${params.ref} \
+        --ref ${params.resource_dir}/pb/Homo_sapiens_assembly38.fasta \
         --in-fq ${fastqs[0]} ${fastqs[1]} \
         --out-bam \${prefix}.bam \
         --out-variants \${prefix}.g.vcf \
         --read-group-sm \${prefix} \
         --num-gpus 1 \
+        --low-memory \
+        --gpusort \
         --gvcf
 
     bgzip -@${task.cpus} \${prefix}.g.vcf
