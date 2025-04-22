@@ -47,5 +47,13 @@ tar -xzf refdata-gex-GRCh38-2024-A.tar.gz || { log "Error extracting 10X RNA ref
 gunzip refdata-gex-GRCh38-2024-A/genes/genes.gtf.gz || { log "Error unzipping genes.gtf (2024 version)"; exit 1; }
 rm refdata-gex-GRCh38-2024-A.tar.gz
 
+log "Downloading Parabricks reference..."
+mkdir -p pb
+cd pb
+wget -O parabricks_sample.tar.gz "https://s3.amazonaws.com/parabricks.sample/parabricks_sample.tar.gz" || { log "Error downloading Parabricks reference"; exit 1; }
+tar -xzf parabricks_sample.tar.gz || { log "Error extracting Parabricks reference"; exit 1; }
+mv parabricks_sample/Ref/* . || { log "Error moving Parabricks reference files"; exit 1; }
+rm -rf parabricks_sample parabricks_sample.tar.gz || { log "Error removing Parabricks sample files"; exit 1; }
+cd ..
 
 log "Reference setup completed successfully"
