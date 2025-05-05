@@ -31,14 +31,13 @@ The pipelines will automatically pull the required containers when run. Our refe
 ```bash
    cd resources
    ./ref_setup.sh
-   cd ..
 ```
 
 More information on the reference data bundle can be found [here](https://github.com/jzinno/darkshore/tree/main/resources).
 
 ## Usage
 
-### scVariantCalling (scVC.nf)
+### scVariantCalling (`scVC.nf`)
 
 This will run the following steps:
 
@@ -47,7 +46,6 @@ This will run the following steps:
 - UG DeepVariant
 - GLNexus joint genotyping
 - Variant Annotation
-- VCF Filtering
 
 Create a bam list
 
@@ -62,7 +60,20 @@ Create a bam list
    nextflow workflows/scVC.nf --bam_list <bam_list> --sample_id <sample_id>
 ```
 
-### scRNAseq Analysis (scRNA.nf)
+A version of the pipeline targeting Illumina data is also availible `workflows/scVC-il.nf`. The input of this version is a list of paired fastq files.
+
+```bash
+   #e.g. fq_list.txt
+   /path/to/fastq1_R1.fastq.gz /path/to/fastq1_R2.fastq.gz
+   /path/to/fastq2_R1.fastq.gz /path/to/fastq2_R2.fastq.gz
+   /path/to/fastq3_R1.fastq.gz /path/to/fastq3_R2.fastq.gz
+```
+
+```bash
+   nextflow workflows/scVC-il.nf --fq_list <fq_list> --sample_id <sample_id>
+```
+
+### scRNAseq Analysis (`scRNA.nf`)
 
 This will run the following steps:
 
