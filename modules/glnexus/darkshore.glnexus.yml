@@ -1,5 +1,6 @@
 # GLnexus config for joint calling DeepVariant whole genome sequencing gVCFs.
 # Modified from the default config to include changes from Ultima Genomics.
+# https://github.com/Ultimagen/UltimaGenomicsApplications/blob/main/Documents/Joint_calling_glnexus.md
 unifier_config:
   min_AQ1: 0
   min_AQ2: 0
