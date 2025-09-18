@@ -1,8 +1,11 @@
-# darkshore
+# SMART-PTA
 
 [![Docker Build](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml/badge.svg)](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml)
 
-### Nextflow pipelines for the worlds biggest single-cell multiomic phylogenies
+### Nextflow pipeline
+in support of the preprint: Large scale single-cell phylogenetic mapping of clonal evolution in the human aging esophagus
+
+![](assets/viz.png)
 
 ## Quick start & Test run
 
