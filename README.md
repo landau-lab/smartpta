@@ -10,7 +10,7 @@ in support of the preprint: Large scale single-cell phylogenetic mapping of clon
 ## Quick start & Test run
 
 ```bash
-   git clone https://github.com/jzinno/darkshore.git
+   git clone https://github.com/landau-lab/smartpta.git
 
    cd darkshore
 
@@ -36,7 +36,7 @@ The pipelines will automatically pull the required containers when run. Our refe
    ./ref_setup.sh
 ```
 
-More information on the reference data bundle can be found [here](https://github.com/jzinno/darkshore/tree/main/resources).
+More information on the reference data bundle can be found [here](https://github.com/landau-lab/smartpta/tree/main/resources).
 
 ## Usage
 
