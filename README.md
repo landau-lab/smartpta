@@ -98,7 +98,7 @@ Create an RNA-seq fastq list
 ```bash
 nextflow workflows/scRNA.nf --rna_fastq_table <rna_fastq_pairs> --sample_id <sample_id>
 ```
-# Citation
+## Citation
 ```bibtex
 @article{Prieto2025,
   author = {Prieto, Tamara and Yuan, Dennis J and Zinno, John and Hughes, Clayton and Midler, Nicholas and Kao, Sheng and Huuhtanen, Jani and Raviram, Ramya and Fotopoulou, Fenia and Ruthen, Neil and Rajagopalan, Srinivas and Schiffman, Joshua S and D Avino, Andrew R and Yoon, Sang-Ho and Sotelo, Jesus and Omans, Nathaniel D and Wheeler, Noelle and Garces, Alejandro and Pradhan, Barun and Cheng, Alexandre Pellan and Robine, Nicolas and Potenski, Catherine and Godfrey, Katharine and Kakiuchi, Nobuyuki and Yokoyama, Akira and Ogawa, Seishi and Abrams, Julian and Raimondi, Ivan and Landau, Dan A},
