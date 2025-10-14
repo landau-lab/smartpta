@@ -12,7 +12,7 @@ in support of the preprint: [Large scale single-cell phylogenetic mapping of clo
 ```bash
    git clone https://github.com/landau-lab/smartpta.git
 
-   cd darkshore
+   cd smartpta
 
    nextflow workflows/scVC.nf -stub-run -profile stub
 
