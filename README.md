@@ -3,7 +3,7 @@
 [![Docker Build](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml/badge.svg)](https://github.com/jzinno/darkshore/actions/workflows/docker-build.yml)
 
 ### Nextflow pipeline
-in support of the preprint: Large scale single-cell phylogenetic mapping of clonal evolution in the human aging esophagus
+in support of the preprint: [Large scale single-cell phylogenetic mapping of clonal evolution in the human aging esophagus](https://www.biorxiv.org/content/10.1101/2025.10.11.681805v1)
 
 ![](assets/viz.png)
 
@@ -97,4 +97,14 @@ Create an RNA-seq fastq list
 
 ```bash
 nextflow workflows/scRNA.nf --rna_fastq_table <rna_fastq_pairs> --sample_id <sample_id>
+```
+# Citation
+```bibtex
+@article{Prieto2025,
+  author = {Prieto, Tamara and Yuan, Dennis J and Zinno, John and Hughes, Clayton and Midler, Nicholas and Kao, Sheng and Huuhtanen, Jani and Raviram, Ramya and Fotopoulou, Fenia and Ruthen, Neil and Rajagopalan, Srinivas and Schiffman, Joshua S and D Avino, Andrew R and Yoon, Sang-Ho and Sotelo, Jesus and Omans, Nathaniel D and Wheeler, Noelle and Garces, Alejandro and Pradhan, Barun and Cheng, Alexandre Pellan and Robine, Nicolas and Potenski, Catherine and Godfrey, Katharine and Kakiuchi, Nobuyuki and Yokoyama, Akira and Ogawa, Seishi and Abrams, Julian and Raimondi, Ivan and Landau, Dan A},
+  title = {Large-scale single-cell phylogenetic mapping of clonal evolution in the human aging esophagus},
+  year = {2025},
+  doi = {10.1101/2025.10.11.681805},
+  journal = {bioRxiv}
+}
 ```
