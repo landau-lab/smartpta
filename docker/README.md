@@ -37,14 +37,12 @@ zinno/glnexus:latest
 zinno/annovar:latest
 ```
 
-## MGATK
+### MGATK
 
 [Mitochondrial Genotyping](https://caleblareau.github.io/mgatk/)
 ```
 quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1
 ```
-
-## RNA tools
 
 ### TRUST4
 
@@ -52,8 +50,6 @@ quay.io/biocontainers/mgatk:0.7.0--pyhdfd78af_1
 ```
 zinno/trust4:1.1.5
 ```
-
-## Generic
 
 ### BioUtils
 
